@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { take } from 'rxjs/operators';
-import { PropertyTypesService } from "src/app/shared/services/property-type/property-types.service";
 import { Observable } from 'rxjs';
-import { PropertyTypes, Product, OptionSelect } from '../interfaces/product';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Product, OptionSelect } from '../interfaces/product';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   templateUrl: './product.component.html',
@@ -20,7 +19,8 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private activateRouter: ActivatedRoute
+    private activateRouter: ActivatedRoute,
+    private router : Router
   ) { 
     this.activateRouter.paramMap.subscribe(
       (params:Params) => {
@@ -87,4 +87,10 @@ export class ProductComponent implements OnInit {
     )
   }
 
+
+  changeTab(e){
+    
+    e !== -1 ? this.indexTab = e : this.router.navigate(["/productos"])
+    
+  }
 }

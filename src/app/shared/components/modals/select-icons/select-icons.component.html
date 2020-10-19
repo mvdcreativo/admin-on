@@ -1,0 +1,40 @@
+
+<mat-card>
+    <button class="btn-close-modal" color="primary" mat-mini-fab (click)="onNoClick()" ><mat-icon>close</mat-icon></button>
+    <mat-card-header>
+        <mat-card-title>Seleccionar Icono</mat-card-title>
+        <mat-card-subtitle>Selecciona</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="mat-typography">
+        <mat-accordion *ngIf="icons | async as icons; else loading">
+            <mat-expansion-panel *ngFor="let category of icons" >
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ category.category }}
+                </mat-panel-title>
+                <mat-panel-description>
+                  
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <!-- CONTENIDO -->
+              
+              <div class="list-icons">
+                  <div class="content-icon" *ngFor="let icon of category.icons">
+                      <button mat-button class="btn-icono" (click)="select(icon)">
+                          <mat-icon class="material-icons-round"> {{ icon.icon_name }} </mat-icon>
+                      </button>
+                  </div>
+              </div>
+    
+              <!--  -->
+            </mat-expansion-panel>
+    
+          </mat-accordion>
+          <ng-template #loading>
+            <div class="div-content">
+                <div class="loading"><div></div><div></div><div></div></div>
+        
+            </div>
+        </ng-template>
+    </mat-card-content>
+</mat-card>

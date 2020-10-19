@@ -2,12 +2,13 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ProductService } from "./services/product.service";
 import { Observable, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { Product, ResponsePaginate } from './interfaces/product';
+import { Product } from './interfaces/product';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Column } from 'src/app/shared/components/data-table/interfaces/table';
 import { Router } from '@angular/router';
+import { ResponsePaginate } from 'src/app/shared/interfaces/response';
 
 
 
@@ -24,10 +25,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
     ////COLUMNAS TABLA
     public columns: Column[] = [
-      { title: 'Código', col: 'code' },
-      { title: 'Dirección ', col: 'address' },
-      { title: 'Barrio', col: 'neighborhood' },
-      { title: 'Propietario', col: 'owner' },
+      { title: 'ID ', col: 'id' },
+      { title: 'Title ', col: 'title' },
+      { title: 'Profesor', col: 'user_instructor' },
+      { title: 'Categoría', col: 'category' },
     ]
 
   dataSource:Observable<any[]>;
@@ -40,7 +41,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   orden: string = 'desc';
   filter: string = '';
   result: Observable<ResponsePaginate>;
-  subscroption: Subscription;
+  subscription: Subscription;
 
 
   paginatorChange(e: PageEvent) {
@@ -71,7 +72,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
 
   getProducts(currentPage?, perPage?, filter?, sort?) {
-    this.subscroption = this.productService.getProducts(currentPage, perPage, filter, sort).subscribe(next => this.loadData());
+    this.subscription = this.productService.getProducts(currentPage, perPage, filter, sort).subscribe(next => this.loadData());
   }
 
   loadData() {
@@ -80,13 +81,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
       const dataTable = v.data.data.map(x => {
         return {
           id: x.id,
-          code: x.code,
           title: x.title,
-          owner: x.user_owner.name,
-          address: x.address,
-          neighborhood: x.neighborhood.name,
+          user_instructor: x.user_instructor.name,
           status_id: x.status_id,
-          publication_id: x.publication?.id
+
 
         }
       })
@@ -112,15 +110,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
   
     if(event.action === "edit"){
-      this.router.navigate(['/productos/producto', event.element.id])    }
-    
+      this.router.navigate(['/productos/producto', event.element.id])    
     }
+    
+  }
 
 
 
     ngOnDestroy(): void {
       //Called once, before the instance is destroyed.
       //Add 'implements OnDestroy' to the class.
-      this.subscroption.unsubscribe()
+      this.subscription.unsubscribe()
     }
 }

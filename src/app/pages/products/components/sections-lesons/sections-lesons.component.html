@@ -1,0 +1,75 @@
+<ng-container *ngIf="productEdit$|async as productEdit; else faltanDatos">
+    <mat-card >
+        <mat-card-header>
+            <mat-card-title>Temas y Lecciones</mat-card-title>
+            <mat-card-subtitle>Crea, edita y ordena los temas y lecciones</mat-card-subtitle>
+            <mat-card-actions>
+                <button mat-flat-button (click)="openDialog()"  color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-accordion cdkDropList (cdkDropListDropped)="drop($event)"
+                *ngIf="(sections$ | async)?.length >= 1 ; else elseSection " class="example-headers-align" multi>
+    
+                <mat-expansion-panel cdkDrag *ngFor="let section of sections$ | async as sections; let i=index"
+                    [expanded]="panel === i">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <mat-icon class="ico-move">drag_indicator</mat-icon>
+                            {{ section.position }}. {{ section.title }}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            <!-- Type your name and age
+                  <mat-icon>account_circle</mat-icon> -->
+    
+                        </mat-panel-description>
+                        <button mat-button class="buttons-actions" (click)="openDialogAddLesson(section)" matTooltip="Agregar Lección"
+                            matTooltipClass="tips" matTooltipPosition="after">
+                            <mat-icon class="material-icons-round">loupe</mat-icon>
+                        </button>
+                        <button mat-button class="buttons-actions" (click)="openDialog(section)" matTooltip="Editar"
+                            matTooltipClass="tips" matTooltipPosition="after">
+                            <mat-icon>menu_open</mat-icon>
+                        </button>
+                        <button mat-button class="buttons-actions" (click)="openDialogDelete(section)" matTooltip="Eliminar"
+                            matTooltipClass="tips">
+                            <mat-icon>delete_outline</mat-icon>
+                        </button>
+                    </mat-expansion-panel-header>
+    
+                    <!-- ///contenido -->
+                    <ng-container *ngIf="section.lessons ; else elseLesson">
+                        <div class="list" cdkDropList (cdkDropListDropped)="dropLesson($event, section.lessons, i)">
+    
+                            <mvd-lessons (fields)="fieldsLesson($event)" cdkDrag class="list-item" *ngFor="let item of section.lessons" [lesson]="item">
+                            </mvd-lessons>
+                        </div>
+    
+                    </ng-container>
+    
+                    <ng-template #elseLesson>
+                        <h3>Aún no ha ingresado Lecciones</h3>
+                    </ng-template>
+                    <!--  -->
+    
+                </mat-expansion-panel>
+    
+            </mat-accordion>
+    
+            <ng-template #elseSection>
+                <h3>Aún no ha ingresado Temas</h3>
+            </ng-template>
+    
+        </mat-card-content>
+        <span >
+            <button mat-flat-button color="primary" (click)="onSubmit()" >Finalizar</button>
+        </span>
+    </mat-card>
+
+</ng-container>
+
+<ng-template #faltanDatos>
+    <h3>Primero ingresa los datos básicos</h3>
+</ng-template>

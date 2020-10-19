@@ -1,0 +1,81 @@
+
+        .buttons-actions{
+            background-color: transparent!important;
+            color: #9e9e9e!important;
+            padding: 5px!important;
+            margin: 0px 3px!important;
+            &:hover{
+                color: var(--color-primary)!important
+            }
+            .material-icons{
+                font-size: 18px!important;
+            }
+            .mat-icon{
+                height: inherit!important;
+                width: inherit!important;
+            }
+        }
+        .mat-button{
+            min-width: 0px!important;
+            line-height: 16px!important;
+        }
+
+        .ico-move{
+            cursor: n-resize;
+            font-size: 18px!important;
+            color: #9e9e9e; 
+            &:hover{
+                color: var(--color-primary)
+            }  
+        }
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 5px!important;
+    background-color: var(--background-gral)!important;
+    display: grid!important;
+    grid-template-columns: 30px auto 34px 34px!important;
+    align-items: center!important;
+    padding: 0.5rem 1rem!important;
+
+    span{
+    }
+    .buttons-actions{
+        background-color: transparent!important;
+        color: #9e9e9e!important;
+        padding: 5px!important;
+        margin: 0px 3px!important;
+        &:hover{
+            color: var(--color-primary)!important
+        }
+        .material-icons{
+            font-size: 18px!important;
+        }
+        .mat-icon{
+            height: inherit!important;
+            width: inherit!important;
+        }
+    }
+    .mat-button{
+        min-width: 0px!important;
+        line-height: 16px!important;
+    }
+
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+    
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }

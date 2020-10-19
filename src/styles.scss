@@ -65,6 +65,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow: h
 *{
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 a{
@@ -99,15 +100,16 @@ a{
 }
 
 //float level
-.mat-form-field-should-float .mat-form-field-label,
-.mat-input-server:focus + .mat-form-field-label-wrapper .mat-form-field-label {
+.mat-form-field-should-float .mat-form-field-label {
   background-color: var(--background-gral);
   width: auto!important;
   border-radius: 50px;
-  padding: 2px 10px;
+  padding: 4px 10px;
   margin-left: -5px;
   margin-top: -6px;
 }
+
+
 
 // Theme styles that only apply to the outline appearance of the form-field.
 
@@ -117,15 +119,18 @@ a{
     }
 
     .mat-form-field-outline-thick {
-      // color: var(--color-primary-light)!important;//// color borde hover
-      @include mat-elevation(6);
+
       transition: 1s;
       border-radius: 5px;
+
+
+
     }
 
     &.mat-focused {
+
       .mat-form-field-outline-thick {
-        color: var(--color-primary)!important;
+        color: var(--color-primary-light)!important;
       }
 
       &.mat-accent .mat-form-field-outline-thick {
@@ -144,15 +149,14 @@ a{
       }
     }
 
-    // &.mat-form-field-disabled {
-    //   .mat-form-field-label {
-    //     color: $label-disabled-color!important;
-    //   }
+  }
 
-    //   .mat-form-field-outline {
-    //     color: $outline-color-disabled!important;
-    //   }
-    // }
+  .field-doble{
+    display: grid;
+    width: 100%!important;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    
+   
   }
   .searchContent{
     margin: 1rem 0;
@@ -177,11 +181,12 @@ a{
 
 
 ////////DIALOG
+
 .mat-dialog-container {
   padding: 0!important;
   border-radius: 20px!important;
   box-shadow: 0px 0px 73px 24px rgba(1, 22, 63, 0.42)!important;
-
+  overflow: hidden!important;
 }
 .btn-close-modal{
   position: absolute!important;
@@ -273,10 +278,6 @@ a{
     }
   }
 
-  &:hover{
-    // @include mat-elevation();
-
-  }
   table{
     width: 100%;
     .th.mat-header-cell, td.mat-cell, td.mat-footer-cell{
@@ -307,15 +308,63 @@ a{
   min-height: calc(100vh - 270px) ;
   
 }
+.mat-tab-body-content {
+  padding: 1rem!important;
+  box-sizing: border-box!important;
+}
 //////////////////
 
+///////// DATA PIKER //////////
+.color-picker{
+  border: none!important;
+  border-radius: 10px;
+  @include mat-elevation(16);
+}
+.color-picker .saturation-lightness{
+  border-radius: 10px 10px 0 0;
+}
+
+//////////////////////////////
 
 ////COLUMNAS
-.c2-1{
+.mvd-col1--1{
+  grid-column: 1 / -1;
+}
+.mvd-col2--1{
   grid-column: 2 / -1;
 }
-.c1-1{
-  grid-column: 1 / -1;
+.mvd-col3--1{
+  grid-column: 3 / -1;
+}
+.mvd-col4--1{
+  grid-column: 4 / -1;
+}
+.mvd-col5--1{
+  grid-column: 5 / -1;
+}
+.mvd-col6--1{
+  grid-column: 6 / -1;
+}
+.mvd-col1-2{
+  grid-column: 1 / 2;
+}
+.mvd-col1-3{
+  grid-column: 1 / 3;
+}
+.mvd-col1-4{
+  grid-column: 1 / 4;
+}
+.mvd-col1-5{
+  grid-column: 1 / 5;
+}
+.mvd-col3-5{
+  grid-column: 3 / 5;
+}
+.mvd-col4-5{
+  grid-column: 4 / 5;
+}
+.mvd-col4-6{
+  grid-column: 4 / 6;
 }
 ///////////
 
@@ -332,6 +381,40 @@ a{
 
 //////////////
 
+///////Avatar
+.select-avatar{
+  .mat-form-field-infix {
+      display: grid!important;
+      grid-template-columns: 50px auto!important;
+      align-items: center;
+      padding: 0.2rem!important;
+
+  }
+  img{
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 50px;
+  }
+}
+.option-select-avatar{
+
+  height: 70px!important;
+  line-height: 70px!important;
+  
+  align-items: center!important;
+  align-content: center!important ;
+  img{
+    width: 47px!important;
+    height: 47px!important;
+    border-radius: 50px!important;
+    object-fit: cover!important;
+    margin-bottom: -20px;
+    padding: 3px;
+  }
+  
+}
+/////////////
 
 ///////
 .items-menu-principal{
@@ -362,7 +445,24 @@ a{
 
 
 @media (max-width: 500px){
-  .c2-1,.c1-1{
-    grid-column: 1 / -1;
+  body [class^='mvd-col']{
+    grid-column: 1 / -1!important;
   }
+}
+
+@media (max-width: 800px){
+  body [class^='mvd-col']{
+    grid-column: 1 / -1!important;
+  }
+}
+
+@media (max-width: 1024px){
+ body [class*='mvd-col'] {
+
+
+      grid-column: 1 / -1!important;
+    
+    
+  }
+ 
 }

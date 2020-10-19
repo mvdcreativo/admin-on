@@ -18,6 +18,8 @@ import { StatusService } from 'src/app/shared/services/status/status.service';
 import { Status } from 'src/app/shared/interfaces/status';
 import { Validators } from '@angular/forms';
 
+import { IconsService } from "src/app/shared/services/icons/icons.service";
+
 @Component({
   selector: 'mvd-categories',
   templateUrl: './categories.component.html',
@@ -31,7 +33,7 @@ export class CategoriesComponent implements OnInit {
     { title: 'ID', col: 'id' },
     { title: 'Nombre', col: 'name' },
     { title: 'Descripción', col: 'description' },
-    { title: 'Estado', col: 'status' },
+    { title: 'Color', col: 'color' },
 
   ]
 
@@ -45,7 +47,6 @@ export class CategoriesComponent implements OnInit {
   filter: string = '';
   result: Observable<ResponsePaginate>;
   subscroption: Subscription;
-  statuses: OptionSelect[];
 
   fields: Fields[]
 
@@ -55,7 +56,8 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private categoriesService: CategoriesService,
     public dialog: MatDialog,
-    private statusService: StatusService
+    private statusService: StatusService,
+    private iconsService: IconsService
   ) {
     this.result = this.categoriesService.resultItems$
 
@@ -65,8 +67,7 @@ export class CategoriesComponent implements OnInit {
   ngOnInit(): void {
     this.getCategories(this.pageDefault, this.perPage, this.filter, this.orden)
 
-
-    this.getStatus()
+    this.iconsService.getDataIcons().subscribe(res=>console.log(res))
 
   }
 
@@ -90,8 +91,9 @@ export class CategoriesComponent implements OnInit {
           id: x.id,
           name: x.name,
           description: x.description,
-          status_id: x.status_id,
-          status: x.status.name
+          color: x.color,
+          ico:x.ico,
+          image:x.image
 
         }
       })
@@ -163,22 +165,16 @@ export class CategoriesComponent implements OnInit {
     const fields = [
       { nameControl: 'id', type: 'hidden', value: elementEdit?.id, label: 'Id' },
       { nameControl: 'name', type: 'text', value: elementEdit?.name, label: 'Nombre', validators: [Validators.required] },
-      { nameControl: 'description', type: 'text', value: elementEdit?.description, label: 'Descripción' },
-      { nameControl: 'status_id', type: 'select', value: elementEdit?.status_id, label: 'Estado', options: this.statuses, validators: [Validators.required] },
+      { nameControl: 'color', type: 'color', value: elementEdit?.color, label: 'Color', validators: [Validators.required] },
+      { nameControl: 'ico', type: 'select_ico', value: elementEdit?.ico, label: 'Icono' },
+      { nameControl: 'description', type: 'textarea', value: elementEdit?.description, label: 'Descripción' },
     ]
 
     return fields
   }
 
 
-  getStatus(){
-    this.statusService.getStatus("ALL").pipe(map(v=> {
-      return v.map( o => { return { name: o.name, value: o.id}})
-       
-    }),take(1)).subscribe(res => this.statuses = res)
 
- 
-  }
 
   storeCategory(data){
     this.categoriesService.storeCategory(data).pipe(take(1)).subscribe(
@@ -197,4 +193,5 @@ export class CategoriesComponent implements OnInit {
   }
 
 
+  
 }

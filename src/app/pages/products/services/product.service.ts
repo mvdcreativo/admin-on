@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 import { environment } from "src/environments/environment";
 
-import { Product, Response, ResponsePaginate, OptionSelect } from "../interfaces/product";
+import { Product, Response, OptionSelect, AdquiredSkills, CourseSection, Lesson, Schedule } from "../interfaces/product";
 import { map, take, catchError } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ResponsePaginate } from 'src/app/shared/interfaces/response';
+import { toFormData } from "src/app/shared/utils/forms/to-form-data";
 
 
 @Injectable({
@@ -19,6 +21,7 @@ export class ProductService {
   private urlUtils = "src/app/shared/utils/data/";
 
   private resultSubject$: BehaviorSubject<ResponsePaginate> = new BehaviorSubject(null)
+  idProduct: any;
   public get resultItems$() {
     return this.resultSubject$
   }
@@ -39,15 +42,20 @@ export class ProductService {
   }
 
   setProductOnEdit(value){
+    this.idProduct = value?.id;
     this.productEditSubject$.next(value)
   }
 
 
 
   storeProduct(data): Observable<Product>{
-    return this.http.post<Response>(`${environment.API}${environment.routesCRUD.products}`, data).pipe(
+    const dataStore = toFormData(data);
+    return this.http.post<Response>(`${environment.API}${environment.routesCRUD.products}`, dataStore).pipe(
       map( v => {
-        this.setProductOnEdit(v.data)
+        if(v.data){
+          this.setProductOnEdit(v.data)
+
+        }
         //snacbarr
         this.openSnackBar('Se creó correctamente','success-snack-bar')
         //////////
@@ -60,8 +68,11 @@ export class ProductService {
 
   updateProduct(data): Observable<Product>{
     const id = this.productEditSubject$.value.id
-    data._method = "put";
-    return this.http.post<Response>(`${environment.API}${environment.routesCRUD.products}/${id}`, data).pipe(
+    
+    const dataUpdate = toFormData(data);
+
+    dataUpdate.append('_method', 'put');
+    return this.http.post<Response>(`${environment.API}${environment.routesCRUD.products}/${id}`, dataUpdate).pipe(
       map( v => {
         this.setProductOnEdit(v.data)
         //snacbarr
@@ -95,6 +106,7 @@ export class ProductService {
     return this.http.get<Response>(`${environment.API}${environment.routesCRUD.products}/${id}`).pipe(map(
       res => {
         this.setProductOnEdit(res.data)
+        
         const resp = res.data
         return resp;
       }
@@ -147,6 +159,273 @@ export class ProductService {
   
   errorHandler(error: HttpErrorResponse) {
     this.openSnackBar(error.message || "error en la solicitud.",'error-snack-bar')
-    return Observable.throw(error.message || "error en la solicitud.");
+    return throwError(error.message || "error en la solicitud.");
   }
+
+
+
+
+/////////////////// Adquired Skills /////////////////////////////////
+
+  storeAdquiredSkill(data): Observable<AdquiredSkills>{
+    return this.http.post<Response>(`${environment.API}${environment.routesCRUD.adquired_skills}`, data).pipe(
+      map( v => {
+        // this.getTransactionTypes(1, 20, '', 'desc').pipe(take(1)).subscribe()
+        //snacbarr
+        this.getProduct(v.data.course_id).pipe(take(1)).subscribe()
+
+        
+        this.openSnackBar('Se creó correctamente','success-snack-bar')
+        //////////
+        return v.data
+      }),
+      catchError(error => this.errorHandler(error))
+    )
+
+  }
+
+  updateAdquiredSkill(data): Observable<AdquiredSkills>{
+    return this.http.put<Response>(`${environment.API}${environment.routesCRUD.adquired_skills}/${data.id}`, data).pipe(
+      map( v => {
+        // this.getTransactionTypes(1, 20, '', 'desc').pipe(take(1)).subscribe()
+        //snacbarr
+        this.getProduct(v.data.course_id).pipe(take(1)).subscribe()
+
+        this.openSnackBar('Actualizado correctamente','success-snack-bar')
+        //////////
+        return v.data
+      }),
+      catchError(error => this.errorHandler(error))
+    )
+
+  }
+
+
+  deleteAdquiredSkill(id){
+    console.log(id);
+    
+    this.http.delete<Response>(`${environment.API}${environment.routesCRUD.adquired_skills}/${id}`).pipe(
+      take(1),
+      map( v => {
+        console.log(id);
+        
+        this.getProduct(this.productEditSubject$.value.id).pipe(take(1)).subscribe();
+        this.openSnackBar('Eliminado correctamente','success-snack-bar')
+        //////////
+        return v.data
+        
+      }),
+      catchError(error => this.errorHandler(error))
+    ).subscribe()
+  }
+//////////////////////////////////////////////////////
+
+
+
+  //////////////// Courses Sections //////////////////
+
+  sectionsUpdate(data){
+    return this.http.put<Response>(`${environment.API}${environment.routesCRUD.course_sections}/${data.id}`, data).pipe(
+      map( v => {
+        // this.getTransactionTypes(1, 20, '', 'desc').pipe(take(1)).subscribe()
+        //snacbarr
+        this.getProduct(this.idProduct).pipe(take(1)).subscribe()
+
+        this.openSnackBar('Actualizado correctamente','success-snack-bar')
+        //////////
+        return v.data
+      }),
+      catchError(error => this.errorHandler(error))
+    )
+
+  }
+
+  storeCourseSection(data): Observable<CourseSection>{
+    return this.http.post<Response>(`${environment.API}${environment.routesCRUD.course_sections}`, data).pipe(
+      map( v => {
+        // this.getTransactionTypes(1, 20, '', 'desc').pipe(take(1)).subscribe()
+        //snacbarr
+        this.getProduct(this.idProduct).pipe(take(1)).subscribe()
+
+        
+        this.openSnackBar('Se creó correctamente','success-snack-bar')
+        //////////
+        return v.data
+      }),
+      catchError(error => this.errorHandler(error))
+    )
+
+  }
+
+  sectionsSortUpdate(data){
+    const list = data
+    return this.http.put<Response>(`${environment.API}course_sections_sort`, list).pipe(
+      map( v => {
+        // this.getTransactionTypes(1, 20, '', 'desc').pipe(take(1)).subscribe()
+        //snacbarr
+        this.getProduct(this.idProduct).pipe(take(1)).subscribe()
+
+        this.openSnackBar('Actualizado correctamente','success-snack-bar')
+        //////////
+        return v.data
+      }),
+      catchError(error => this.errorHandler(error))
+    )
+
+  }
+
+  deleteCourseSection(id){
+    console.log(id);
+    
+    this.http.delete<Response>(`${environment.API}${environment.routesCRUD.course_sections}/${id}`).pipe(
+      take(1),
+      map( v => {
+        console.log(id);
+        
+        this.getProduct(this.productEditSubject$.value.id).pipe(take(1)).subscribe();
+        this.openSnackBar('Eliminado correctamente','success-snack-bar')
+        //////////
+        return v.data
+        
+      }),
+      catchError(error => this.errorHandler(error))
+    ).subscribe()
+  }
+/////////////////////////////////////////
+
+
+
+
+////////////// lecciones ////////////////
+
+lessonUpdate(data): Observable<Lesson>{
+  console.log(data);
+  
+  return this.http.put<Response>(`${environment.API}${environment.routesCRUD.lessons}/${data.id}`, data).pipe(
+    map( v => {
+      // this.getTransactionTypes(1, 20, '', 'desc').pipe(take(1)).subscribe()
+      //snacbarr
+      this.getProduct(this.idProduct).pipe(take(1)).subscribe()
+
+      this.openSnackBar('Actualizado correctamente','success-snack-bar')
+      //////////
+      return v.data
+    }),
+    catchError(error => this.errorHandler(error))
+  )
+
+}
+
+storeLesson(data): Observable<Lesson>{
+  return this.http.post<Response>(`${environment.API}${environment.routesCRUD.lessons}`, data).pipe(
+    map( v => {
+      // this.getTransactionTypes(1, 20, '', 'desc').pipe(take(1)).subscribe()
+      //snacbarr
+      this.getProduct(this.idProduct).pipe(take(1)).subscribe()
+
+      
+      this.openSnackBar('Se creó correctamente','success-snack-bar')
+      //////////
+      return v.data
+    }),
+    catchError(error => this.errorHandler(error))
+  )
+
+}
+
+
+  lessonsSortUpdate(data){
+    const list = data
+    return this.http.put<Response>(`${environment.API}lessons_sort`, list).pipe(
+      map( v => {
+        // this.getTransactionTypes(1, 20, '', 'desc').pipe(take(1)).subscribe()
+        //snacbarr
+        this.getProduct(this.idProduct).pipe(take(1)).subscribe()
+
+        this.openSnackBar('Actualizado correctamente','success-snack-bar')
+        //////////
+        return v.data
+      }),
+      catchError(error => this.errorHandler(error))
+    )
+
+  }
+
+
+  deleteLesson(id){
+    console.log(id);
+    
+    this.http.delete<Response>(`${environment.API}${environment.routesCRUD.lessons}/${id}`).pipe(
+      take(1),
+      map( v => {
+        console.log(id);
+        
+        this.getProduct(this.productEditSubject$.value.id).pipe(take(1)).subscribe();
+        this.openSnackBar('Eliminado correctamente','success-snack-bar')
+        //////////
+        return v.data
+        
+      }),
+      catchError(error => this.errorHandler(error))
+    ).subscribe()
+  }
+
+
+
+
+
+  /////////////////// Schedules - Horarios /////////////////////////////////
+
+  storeSchedule(data): Observable<Schedule>{
+    return this.http.post<Response>(`${environment.API}${environment.routesCRUD.schedules}`, data).pipe(
+      map( v => {
+        // this.getTransactionTypes(1, 20, '', 'desc').pipe(take(1)).subscribe()
+        //snacbarr
+        this.getProduct(v.data.course_id).pipe(take(1)).subscribe()
+
+        
+        this.openSnackBar('Se creó correctamente','success-snack-bar')
+        //////////
+        return v.data
+      }),
+      catchError(error => this.errorHandler(error))
+    )
+
+  }
+
+  updateSchedule(data): Observable<Schedule>{
+    return this.http.put<Response>(`${environment.API}${environment.routesCRUD.schedules}/${data.id}`, data).pipe(
+      map( v => {
+        // this.getTransactionTypes(1, 20, '', 'desc').pipe(take(1)).subscribe()
+        //snacbarr
+        this.getProduct(v.data.course_id).pipe(take(1)).subscribe()
+
+        this.openSnackBar('Actualizado correctamente','success-snack-bar')
+        //////////
+        return v.data
+      }),
+      catchError(error => this.errorHandler(error))
+    )
+
+  }
+
+
+  deleteSchedule(id){
+    console.log(id);
+    
+    this.http.delete<Response>(`${environment.API}${environment.routesCRUD.schedules}/${id}`).pipe(
+      take(1),
+      map( v => {
+        console.log(id);
+        
+        this.getProduct(this.productEditSubject$.value.id).pipe(take(1)).subscribe();
+        this.openSnackBar('Eliminado correctamente','success-snack-bar')
+        //////////
+        return v.data
+        
+      }),
+      catchError(error => this.errorHandler(error))
+    ).subscribe()
+  }
+//////////////////////////////////////////////////////
 }

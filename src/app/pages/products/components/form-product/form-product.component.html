@@ -1,90 +1,153 @@
 <form [formGroup]="form">
+    <div class="content-image">
+        <div class="upload">
+            <label for="file">
+                <div class="image-input">
+                    <img [src]="imgPreview" *ngIf="imgPreview" alt="Subir Imagen">
+                    <img [src]="'../../../../../../assets/images/no-image.svg'" *ngIf="!imgPreview" alt="Subir Imagen">
+                </div>
+            </label>
+            <input id="file" hidden type="file" (change)="uploadImage($event)">
+            <span style="color:red;" *ngIf="messageUpload">{{messageUpload}}</span>
+        </div>
+    </div>
 
-    <mat-form-field class="" appearance="outline">
-        <mat-label>Código</mat-label>
-        <input formControlName="code" matInput placeholder="Cod.Ref">
+    <mat-form-field class="mvd-col1-3" appearance="outline">
+        <mat-label>Título del Curso</mat-label>
+        <input formControlName="title" matInput placeholder="Titulo descriptivo" autocomplete="off">
     </mat-form-field>
 
-    <mat-form-field class="c2-1" appearance="outline">
-        <mat-label>Titulo</mat-label>
-        <input formControlName="title" matInput placeholder="Titulo descriptivo">
+    <div class="mvd-col3-5 content-instructor">
+        <div *ngIf="nameInstructor" class="instructorEdit">
+            <img [src]="productEdit.user_instructor.account.image">
+            {{ nameInstructor }}
+            <button mat-stroked-button color="primary" (click)="editInstructor()">cambiar</button>
+        </div>
+        <mat-form-field *ngIf="!nameInstructor" class="animate__animated animate__slideInRight"
+            [ngClass]="imgInstructor ? 'select-avatar': ''" appearance="outline">
+            <mat-label>Docente</mat-label>
+            <img *ngIf="imgInstructor" [src]="imgInstructor">
+            <mat-select formControlName="user_instructor" (selectionChange)="selectInstructor($event)" selected="">
+                <mat-option *ngFor="let instructor of instructors|async" class="option-select-avatar"
+                    [value]="instructor">
+                    <img [src]="instructor.image">
+                    {{ instructor.user.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <mat-form-field class="mvd-col5--1" appearance="outline">
+        <mat-label>Fecha de Inicio</mat-label>
+        <input 
+            matInput 
+            formControlName="date_ini" 
+            [matDatepicker]="picker" 
+            autocomplete="off" 
+            (click)="picker.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker startView="year"></mat-datepicker>
+    </mat-form-field>
+
+
+    <mat-form-field class="mvd-col1-3" appearance="outline">
+        <mat-label>Categorias</mat-label>
+        <mat-select formControlName="categories" multiple >
+
+            <mat-select-trigger >
+                <mat-chip-list>
+                    <mat-chip *ngFor="let category of form.get('categories').value; let i=index" [removable]="true"
+                        (removed)="onCategoryRemoved(i)">
+                        {{ category.name }}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-select-trigger>
+
+            <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
+
+        </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field class="" appearance="outline">
+        <mat-label>Cupos</mat-label>
+        <input formControlName="cupos" type="number" matInput placeholder="Cupos" autocomplete="off">
+    </mat-form-field>
+
+    <div class="field-doble">
+        <mat-form-field appearance="outline">
+            <mat-label>Unidad de Tiempo</mat-label>
+            <mat-select formControlName="length_unit_id">
+                <mat-option *ngFor="let lengthUnit of lengthUnits | async" [value]="lengthUnit.id">{{ lengthUnit.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="" appearance="outline">
+            <mat-label>Duración</mat-label>
+            <input formControlName="length" type="number" matInput placeholder="Duracion" autocomplete="off">
+        </mat-form-field>
+    </div>
+
+    <mat-form-field class="" appearance="outline">
+        <mat-label>Carga Horaria</mat-label>
+        <input formControlName="effort" type="text" matInput placeholder="Horas por semana" autocomplete="off">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-        <mat-label>Tipo de Propiedad</mat-label>
-        <mat-select formControlName="property_type_id">
-            <mat-option>Selecciona...</mat-option>
-            <mat-option *ngFor="let propertyType of propertyTypes | async" [value]="propertyType.id">{{ propertyType.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-    <mat-form-field class="c1-1" appearance="outline">
-        <mat-label>Dirección</mat-label>
-        <input formControlName="address" matInput placeholder="Dirección">
-    </mat-form-field>
-
-    <mat-form-field class="" appearance="outline">
-        <mat-label>Provincia</mat-label>
-        <mat-select placeholder="Seleccione Provincia..." formControlName="state"
-            (selectionChange)="onSelectState()">
-            <mat-option *ngFor="let state of states | async" [value]="state.id">
-                {{state.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="" appearance="outline">
-        <mat-label>Ciudad</mat-label>
-        <mat-select placeholder="Seleccione Ciudad..." formControlName="city"
-            (selectionChange)="onSelectCity()">
-            <mat-option *ngFor="let city of cities | async | filterCity: form.get('state').value"
-                [value]="city.id">
-                {{city.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="" appearance="outline">
-        <mat-label>Municipalidad</mat-label>
-        <mat-select placeholder="Seleccione Municipalidad..." formControlName="municipality"
-            (selectionChange)="onSelectMunicipality()">
-            <mat-option
-                *ngFor="let municipality of municipalities | async | filterMunicipality: form.get('city').value"
-                [value]="municipality.id">
-                {{municipality.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="" appearance="outline">
-        <mat-label>Localidad/Barrio</mat-label>
-        <mat-select placeholder="Selecciona Localidad/Barrio..." formControlName="neighborhood_id"
-            (selectionChange)="onSelectNeighborhood()">
-            <mat-option
-                *ngFor="let neighborhood of neighborhoods | async | filterNeighborhoods: form.get('municipality').value"
-                [value]="neighborhood.id">
-                {{neighborhood.name}}
-            </mat-option>
+        <mat-label>Nivel del Curso</mat-label>
+        <mat-select formControlName="level_id">
+            <mat-option *ngFor="let level of levels|async" [value]="level.id">{{ level.name }}</mat-option>
         </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-        <mat-label>Status</mat-label>
+        <mat-label>Certificado al finalizar</mat-label>
+        <mat-select formControlName="certificate">
+            <mat-option value="Si">SI</mat-option>
+            <mat-option value="No">NO</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="" appearance="outline">
+        <mat-label>Nombre del Certificado</mat-label>
+        <input formControlName="title_certificate" type="text" matInput placeholder="Nombre del Certificado"
+            autocomplete="off">
+    </mat-form-field>
+
+    <div class="field-doble mvd-col1-2">
+        <mat-form-field appearance="outline">
+            <mat-label>Moneda</mat-label>
+            <mat-select formControlName="currency_id">
+                <mat-option *ngFor="let currency of currencies | async" [value]="currency.id">{{ currency.symbol }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="" appearance="outline">
+            <mat-label>Precio</mat-label>
+            <input formControlName="price" type="number" matInput placeholder="Precio" autocomplete="off">
+        </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Estado</mat-label>
         <mat-select formControlName="status_id">
-          <mat-option *ngFor="let status of statuses | async" [value]="status.id">{{ status.name }}</mat-option>
+            <mat-option *ngFor="let status of statuses|async" [value]="status.id">{{ status.name }}</mat-option>
         </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="" appearance="outline">
-        <mat-label>Latitud</mat-label>
-        <input formControlName="latitude" matInput placeholder="Latitud">
+
+    <mat-form-field class="mvd-col1--1" appearance="outline">
+        <mat-label>Requisitos</mat-label>
+        <textarea style="min-height: 100px" formControlName="requirements" matInput></textarea>
     </mat-form-field>
 
-    <mat-form-field class="" appearance="outline">
-        <mat-label>Longitud</mat-label>
-        <input formControlName="longitude" matInput placeholder="Longitud">
+    <mat-form-field class="mvd-col1--1" appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <textarea style="min-height: 200px" formControlName="description" matInput></textarea>
     </mat-form-field>
+
+
     <span>
-        <button mat-flat-button color="primary" (click)="onSubmit()">Sigiente</button>
+        <button mat-flat-button color="primary" [disabled]="!form.valid" (click)="onSubmit()">Sigiente</button>
     </span>
 </form>

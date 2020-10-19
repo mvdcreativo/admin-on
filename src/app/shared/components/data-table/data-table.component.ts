@@ -77,4 +77,10 @@ export class DataTableComponent implements OnInit {
       this.router.navigate(['/publicaciones/publicacion', element.publication_id])
     }
   }
+
+  icon(i){
+    console.log(i);
+    console.log(this.dataSource[i].ico);
+    return this.dataSource[i].ico
+  }
 }

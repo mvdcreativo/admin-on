@@ -1,0 +1,12 @@
+
+<ng-container *ngIf="productEdit$|async as productEdit; else faltanDatos">
+    
+    <mvd-adquired-skills [product]="productEdit$"></mvd-adquired-skills>
+    <span >
+        <button mat-flat-button color="primary" (click)="onSubmit()" >Siguiente</button>
+    </span>
+
+</ng-container>
+<ng-template #faltanDatos>
+    <h3>Primero ingresa los datos básicos</h3>
+</ng-template>

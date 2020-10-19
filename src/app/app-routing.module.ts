@@ -17,10 +17,14 @@ const routes: Routes = [
       { path: 'municipalidades', loadChildren: () => import('./pages/locations/municipalities/municipalities.module').then(m => m.MunicipalitiesModule) },
       { path: 'barrios', loadChildren: () => import('./pages/locations/neighborhoods/neighborhoods.module').then(m => m.NeighborhoodsModule) },
       { path: 'categorias', loadChildren: () => import('./pages/categories/categories.module').then(m => m.CategoriesModule) },
-      { path: 'tipos-de-operaciones', loadChildren: () => import('./pages/transaction-types/transaction-types.module').then(m => m.TransactionTypesModule) },
-      { path: 'caracteristicas', loadChildren: () => import('./pages/features/features.module').then(m => m.FeaturesModule) },
-      { path: 'publicaciones', loadChildren: () => import('./pages/publications/publications.module').then(m => m.PublicationsModule) },
+      { path: 'accounts', loadChildren: () => import('./pages/accounts/accounts.module').then(m => m.AccountsModule) },
+      // { path: 'tipos-de-operaciones', loadChildren: () => import('./pages/transaction-types/transaction-types.module').then(m => m.TransactionTypesModule) },
+      // { path: 'caracteristicas', loadChildren: () => import('./pages/features/features.module').then(m => m.FeaturesModule) },
+      // { path: 'publicaciones', loadChildren: () => import('./pages/publications/publications.module').then(m => m.PublicationsModule) },
       { path: 'moneda', loadChildren: () => import('./pages/currencies/currencies.module').then(m => m.CurrenciesModule) },
+      { path: 'docentes', loadChildren: () => import('./pages/instructors/instructors.module').then(m => m.InstructorsModule) },
+      { path: 'alumnos', loadChildren: () => import('./pages/students/students.module').then(m => m.StudentsModule) },
+      
       
       { path: '**', loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule) },
     ]

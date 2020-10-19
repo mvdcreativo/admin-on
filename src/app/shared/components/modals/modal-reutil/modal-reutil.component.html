@@ -1,13 +1,14 @@
+<mat-card class="" >
+    <button class="btn-close-modal" color="primary" mat-mini-fab (click)="onNoClick()" ><mat-icon>close</mat-icon></button>
+    <mat-card-header>
+        <mat-card-title *ngIf="data[0].titleForm">{{ data[0]?.titleForm }}</mat-card-title>
+        <mat-card-title *ngIf="!data[0].titleForm">Registro</mat-card-title>
+    </mat-card-header>
+    
+    <mvd-dinamic-form [fields]="data" (value)="action($event)" ></mvd-dinamic-form>
 
-        <mat-card class="" >
-            <button class="btn-close-modal" color="primary" mat-mini-fab (click)="onNoClick()" ><mat-icon>close</mat-icon></button>
-            <mat-card-header>
-                <mat-card-title>Nuevo Registro</mat-card-title>
-            </mat-card-header>
-            
-            <mvd-dinamic-form [fields]="data" (value)="action($event)" ></mvd-dinamic-form>
-        
-            <!-- <span class="border"></span> -->
+    <!-- <span class="border"></span> -->
 
-        </mat-card>
+</mat-card>
+
         

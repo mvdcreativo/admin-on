@@ -1,10 +1,10 @@
 <mat-card class="card mat-elevation-z16 animate__animated animate__slideInRight">
     <mat-card-header>
-        <mat-card-title>Propiedad</mat-card-title>
-        <mat-card-subtitle>Detalles de la Propiedad <strong>{{ (productEdit|async)?.title }}</strong>
+        <mat-card-title>Curso</mat-card-title>
+        <mat-card-subtitle>Detalles del Curso <strong>{{ (productEdit|async)?.title }}</strong>
         </mat-card-subtitle>
     </mat-card-header>
-    <ng-container *ngIf="(productEdit | async) || edit === false; else loading">
+    <ng-container *ngIf="edit === false || (productEdit | async) as productEdit; else loading">
 
         <mat-tab-group mat-stretch-tabs class="" [selectedIndex]="indexTab">
             <mat-tab label="Datos Básicos">
@@ -12,18 +12,22 @@
                 <mvd-form-product (dataSubmit)="dataSubmit($event)"></mvd-form-product>
 
             </mat-tab>
-            <mat-tab label="Características">
 
-                <mvd-features *ngIf="productEdit | async" (dataFeatures)="updateProduct($event)"></mvd-features>
-                <span *ngIf="!(productEdit | async)" class="no-productEdit">Primero ingresa los Datos Básicos</span>
-
+            <mat-tab label="Horarios">
+                <mvd-schedules (submit)="changeTab($event)" ></mvd-schedules>
+                
             </mat-tab>
-            <mat-tab label="Imágenes">
 
-                <mvd-images-product *ngIf="productEdit | async"></mvd-images-product>
-                <span *ngIf="!(productEdit | async)" class="no-productEdit">Primero ingresa los Datos Básicos</span>
-
+            <mat-tab label="Conocimientos">
+                <mvd-tab2 (submit)="changeTab($event)" ></mvd-tab2>
+                
             </mat-tab>
+
+            <mat-tab label="Temas y Lecciones">
+                <mvd-sections-lesons (submit)="changeTab($event)"></mvd-sections-lesons>
+                
+            </mat-tab>
+
         </mat-tab-group>
     </ng-container>
 

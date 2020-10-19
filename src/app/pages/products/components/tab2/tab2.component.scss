@@ -1,0 +1,71 @@
+form{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem!important;
+    span{
+        grid-column: 1/-1;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        button{
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px 50px;
+        }
+    }
+    mvd-adquired-skills{
+        grid-column: 1/-1!important;
+    }
+
+}
+.content-instructor{
+    display: grid;
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 1rem;
+    justify-content: center;
+    border-radius: 10px;
+    // background-color: var(--background-gral);
+}
+
+.instructorEdit{
+    display: grid;
+    grid-template-columns: 40px auto 100px;
+    gap: 1rem;
+    align-items: center;
+    justify-items: left;
+    border-radius: 5px;
+    background-color: var(--background-gral);
+    padding-left: 1rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 3px;
+    // padding-bottom: 1rem;
+    margin-bottom: 1.4rem;
+
+    button{
+        font-weight: 300;
+    }
+    img{
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50px;
+    }
+}
+span{
+
+    display: block;
+    width: 150px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    button{
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px 50px;
+    }
+}

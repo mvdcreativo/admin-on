@@ -1,0 +1,54 @@
+<ng-container *ngIf="productEdit$|async as productEdit; else faltanDatos">
+    
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Días y Horarios</mat-card-title>
+            <mat-card-subtitle>Establezca aqui los días y horarios para este curso</mat-card-subtitle>
+            <mat-card-actions>
+                <button mat-flat-button (click)="openDialog()" color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card-header>
+        <mat-card-content>
+    
+            <ng-container *ngIf="schedules |async as schedules ; else elseTemplate">
+                <div class="list">
+                    <div class="list-item" *ngFor="let item of schedules" >
+                        <mat-icon color="accent" class="material-icons-round">access_time</mat-icon>
+                        <span>{{ item.day}} de {{ item.h_ini }} a {{ item.h_end }}</span>
+                        <button mat-button class="buttons-actions" 
+                        (click)="openDialog(item)" 
+                        matTooltip="Editar" 
+                        matTooltipClass="tips"
+                        matTooltipPosition="after">
+                            <mat-icon >menu_open</mat-icon>
+                        </button>                    
+                        <button mat-button
+                        class="buttons-actions" 
+                        (click)="openDialogDelete(item)" 
+                        matTooltip="Eliminar"  
+                        matTooltipClass="tips">
+                            <mat-icon>delete_outline</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                
+            </ng-container>
+            <ng-template #elseTemplate>
+                <h3>Aún no ha ingresado conocimientos</h3>
+            </ng-template>
+            
+            
+        </mat-card-content>
+    
+    </mat-card>
+
+    <span >
+        <button mat-flat-button color="primary" (click)="onSubmit()" >Siguiente</button>
+    </span>
+
+</ng-container>
+<ng-template #faltanDatos>
+    <h3>Primero ingresa los datos básicos</h3>
+</ng-template>

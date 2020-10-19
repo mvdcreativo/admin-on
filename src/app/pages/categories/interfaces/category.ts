@@ -1,10 +1,16 @@
+import { Product } from '../../products/interfaces/product';
+
 export interface Category {
-    id?: number;
+    id: number;
     name: string;
     slug: string;
     description?: string;
-    status_id?: number;
+    image?: string;
+    ico?: string;
+    color?: string;
     created_at?: Date;
     updated_at?: Date;
     deleted_at?: any;
+    courses?: Product[];
 }
+

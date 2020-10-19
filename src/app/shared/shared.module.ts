@@ -12,6 +12,7 @@ import { ConfirmComponent } from './components/modals/confirm/confirm.component'
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { ModalReutilComponent } from './components/modals/modal-reutil/modal-reutil.component';
 import { DinamicFormComponent } from './components/dinamic-form/dinamic-form.component';
+import { SelectIconsComponent } from './components/modals/select-icons/select-icons.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DinamicFormComponent } from './components/dinamic-form/dinamic-form.com
     SnackBarComponent,
     ModalReutilComponent,
     DinamicFormComponent,
+    SelectIconsComponent,
   ],
   imports: [
     CommonModule,

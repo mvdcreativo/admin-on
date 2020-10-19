@@ -4,23 +4,33 @@
 
 export const environment = {
   production: false,
-  API: "http://presenza_api_v1.test/api/",
+  API: "http://on_api_v1.test/api/",
 
 
   ////ROUTES API
   routesCRUD: {
-    products: "properties",
-    states: "provinces",
+    products: "courses",
+    states: "states",
     cities: "cities",
     countries: "countries",
-    features: "features",
+    accounts: "accounts",
     municipalities: "municipalities",
     neighborhoods: "neighborhoods",
-    categories: "property_types",
-    transactionTypes: "transaction_types",
+    categories: "categories",
+    transactionTypes: "courses_sections",
     publications: "publications",
-    currencies: "currencies"
-
+    currencies: "currencies",
+    roles: "roles",
+    length_units: "length_units",
+    levels: "levels",
+    instructors:"instructors",
+    students: "students",
+    adquired_skills: "adquired_skills",
+    course_sections: "course_sections",
+    lessons: "lessons",
+    schedules: "schedules",
+    users: "users"
+  
   }
 
 

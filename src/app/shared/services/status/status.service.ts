@@ -19,7 +19,7 @@ export class StatusService {
   ) { }
 
 
-  getStatus(forElement?):Observable<Status[]>{
+  getStatuses(forElement?):Observable<Status[]>{
     return this.http.get<Response>(`${environment.API}statuses?for_element=${forElement}`).pipe(
       map(v => v.data)
     )
