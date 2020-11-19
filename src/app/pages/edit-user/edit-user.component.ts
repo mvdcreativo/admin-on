@@ -85,7 +85,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
   setFields() {
     // console.log(elementEdit);
     this.typesDocIden = [
-      {name: 'C.I.', value:'C.I.'},
+      {name: 'CI', value:'CI'},
       {name: 'Pasaporte', value:'Pasaporte'}
     ]
     if (this.urlRequest[1]==="docentes") {
