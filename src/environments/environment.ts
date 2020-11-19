@@ -29,7 +29,8 @@ export const environment = {
     course_sections: "course_sections",
     lessons: "lessons",
     schedules: "schedules",
-    users: "users"
+    users: "users",
+    orders: "orders"
   
   }
 

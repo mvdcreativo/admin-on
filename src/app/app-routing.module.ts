@@ -24,6 +24,7 @@ const routes: Routes = [
       { path: 'moneda', loadChildren: () => import('./pages/currencies/currencies.module').then(m => m.CurrenciesModule) },
       { path: 'docentes', loadChildren: () => import('./pages/instructors/instructors.module').then(m => m.InstructorsModule) },
       { path: 'alumnos', loadChildren: () => import('./pages/students/students.module').then(m => m.StudentsModule) },
+      { path: 'pagos', loadChildren: () => import('./pages/payments/payments.module').then(m => m.PaymentsModule) },
       
       
       { path: '**', loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule) },
