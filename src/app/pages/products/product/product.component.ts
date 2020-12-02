@@ -25,12 +25,14 @@ export class ProductComponent implements OnInit {
     this.activateRouter.paramMap.subscribe(
       (params:Params) => {
         if(params.params.id){
-          
           this.productEdit = this.productService.getProduct(params.params.id)
           this.edit= true;
-        }else{
+        }
+        
+        if(!this.edit && !params.params.id){
           this.productEdit = null
         }
+        
       }
     )
 
@@ -45,17 +47,11 @@ export class ProductComponent implements OnInit {
 
   dataSubmit(data){
     if(data.indexTab === 0 ) {
-      if (this.productEdit) {
-        console.log(this.productEdit);
-        
-        console.log(this.indexTab);
-        
+      if(this.productEdit) {
         this.updateProduct(data.data)
       }else{
         this.productEdit = this.productService.productOnEdit
-
         this.addProduct(data.data)
-        
       }
     }
    
@@ -64,10 +60,7 @@ export class ProductComponent implements OnInit {
   addProduct(data){
     this.productService.storeProduct(data).pipe(take(1)).subscribe(
       res=> {
-        console.log(res);
-        
-        this.indexTab = 1
-        // this.productService.setProductOnEdit(res)
+        this.indexTab = 1;
       }
     )
   }

@@ -67,9 +67,11 @@ export interface Account {
 
 export interface Product {
     id: number;
+    original_id?:number;
     title: string;
     slug: string;
     cupos: number;
+    cupos_confirmed?:number;
     image?: string;
     schedules?: Schedule[];
     date_ini?: Date;

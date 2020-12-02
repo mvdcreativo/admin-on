@@ -26,9 +26,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
     ////COLUMNAS TABLA
     public columns: Column[] = [
       { title: 'ID ', col: 'id' },
-      { title: 'Title ', col: 'title' },
+      { title: 'Titulo ', col: 'title' },
       { title: 'Profesor', col: 'user_instructor' },
-      { title: 'Categoría', col: 'category' },
+      { title: 'Cupos', col: 'cupos', class: 'class' },
+      { title: 'Inicio ', col: 'date_ini', pipe: 'dd/MM/yyyy'}
+      
     ]
 
   dataSource:Observable<any[]>;
@@ -41,8 +43,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
   orden: string = 'desc';
   filter: string = '';
   result: Observable<ResponsePaginate>;
-  subscription: Subscription;
+  subscriptions: Subscription[]=[];
 
+  statusSelected: number[] = [1,3];
+  checkboxes: any = [
+    {name: "Activos",value:true , id:1},
+    {name: "Destacados",value:true, id:3 },
+    {name: "Inactivos",value:false, id:2 },
+  ]
 
   paginatorChange(e: PageEvent) {
     console.log(e);
@@ -50,7 +58,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   }
   /////////////
-
+  changeCheck(){
+    this.statusSelected = this.checkboxes.filter(v=> v.value).map(v=>v.id)
+    // console.log(this.statusSelected);
+    this.getProducts(this.pageDefault, this.perPage, this.filter, this.orden, this.statusSelected)
+    
+  }
 
   constructor(
     private productService: ProductService,
@@ -63,7 +76,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
     
-    this.getProducts(this.pageDefault, this.perPage, this.filter, this.orden)
+    this.getProducts(this.pageDefault, this.perPage, this.filter, this.orden, this.statusSelected)
 
   }
 
@@ -71,19 +84,28 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
 
 
-  getProducts(currentPage?, perPage?, filter?, sort?) {
-    this.subscription = this.productService.getProducts(currentPage, perPage, filter, sort).subscribe(next => this.loadData());
+  getProducts(currentPage?, perPage?, filter?, sort?, status?) {
+    this.subscriptions.push(
+      this.productService.getProducts(currentPage, perPage, filter, sort, status).subscribe(next => this.loadData())
+    )
   }
 
   loadData() {
 
     this.dataSource = this.result.pipe(map(v => {
       const dataTable = v.data.data.map(x => {
+        let styleClass = null
+        if(x.cupos_confirmed >=  x.cupos - 3){
+          styleClass = "text-red"
+        }
         return {
           id: x.id,
           title: x.title,
           user_instructor: x.user_instructor.name,
           status_id: x.status_id,
+          cupos: `${x.cupos_confirmed}/${x.cupos}`,
+          date_ini: x.date_ini,
+          class: styleClass
 
 
         }
@@ -95,7 +117,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   search(filter){
-    this.getProducts(this.pageDefault, this.perPage, filter, this.orden)
+    this.getProducts(this.pageDefault, this.perPage, filter, this.orden, this.statusSelected)
   }
 
   deleteItem(id):Observable<any>{
@@ -103,7 +125,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   itemAction(event){
-    console.log(event);
+    // console.log(event);
     
     if(event.action === "delete"){
       this.deleteItem(event.element.id).pipe(take(1)).subscribe( res=> console.log(res))
@@ -112,14 +134,20 @@ export class ProductsComponent implements OnInit, OnDestroy {
     if(event.action === "edit"){
       this.router.navigate(['/productos/producto', event.element.id])    
     }
+
+    if(event.action === "clone"){
+      console.log(event.element);
+      this.subscriptions.push(
+        this.productService.duplicateProduct(event.element.id).subscribe()
+      )
+    }
     
   }
 
 
 
     ngOnDestroy(): void {
-      //Called once, before the instance is destroyed.
-      //Add 'implements OnDestroy' to the class.
-      this.subscription.unsubscribe()
+
+      this.subscriptions.map(v=>v.unsubscribe())
     }
 }

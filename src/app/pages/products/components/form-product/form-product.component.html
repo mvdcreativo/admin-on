@@ -30,8 +30,8 @@
             <mat-select formControlName="user_instructor" (selectionChange)="selectInstructor($event)" selected="">
                 <mat-option *ngFor="let instructor of instructors|async" class="option-select-avatar"
                     [value]="instructor">
-                    <img [src]="instructor.image">
-                    {{ instructor.user.name }}
+                    <img [src]="instructor.account.image">
+                    {{ instructor.name }} {{ instructor.last_name }}
                 </mat-option>
             </mat-select>
         </mat-form-field>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -6,6 +6,7 @@ import { Column } from "./interfaces/table";
 import { ConfirmComponent } from '../modals/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'mvd-data-table',
@@ -16,9 +17,10 @@ import { Router } from '@angular/router';
 export class DataTableComponent implements OnInit {
 
   @Input() dataSource
-  @Input() columns : Column[];
-  @Output() actionChange : EventEmitter<any> = new EventEmitter;
+  @Input() columns: Column[];
+  @Output() actionChange: EventEmitter<any> = new EventEmitter;
   displayedColumns: any[];
+  url: any;
 
 
 
@@ -27,9 +29,9 @@ export class DataTableComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router
 
-  ) { 
+  ) {
     new MatTableDataSource(this.dataSource)
-    
+
   }
 
   ngOnInit(): void {
@@ -37,50 +39,63 @@ export class DataTableComponent implements OnInit {
     this.displayedColumns.push('actions')
   }
 
-  editItem(element){
+  editItem(element) {
 
-      const action = {action: 'edit', element: element}
-      this.actionChange.emit(action)
+    const action = { action: 'edit', element: element }
+    this.actionChange.emit(action)
 
-    
+
   }
 
-  deleteItem(element){
+  cloneItem(element) {
+
+    const action = { action: 'clone', element: element }
+    this.actionChange.emit(action)
+  }
+
+  deleteItem(element) {
     this.openDialog(element)
   }
 
-  openDialog(element):void {
-    let name 
+  openDialog(element): void {
+    let name
     if (element?.name) {
       name = element.name
     } else {
       name = element.title
     }
-    
+
     const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '350px',
-      data: {name: name, message: "", value: false}
+      data: { name: name, message: "", value: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result?.value){
-        const action = {action: 'delete', element: element}
+      if (result?.value) {
+        const action = { action: 'delete', element: element }
         this.actionChange.emit(action)
       }
     });
-    
+
   }
 
-  publication(element){
-    if(element){
+  publication(element) {
+    if (element) {
 
       this.router.navigate(['/publicaciones/publicacion', element.publication_id])
     }
   }
 
-  icon(i){
+  icon(i) {
     console.log(i);
     console.log(this.dataSource[i].ico);
     return this.dataSource[i].ico
+  }
+
+
+  isPageProduct() {
+    const requestUrl = this.router.url.split("/")
+    if (requestUrl[1] === "productos") return true;
+    return false
   }
 }

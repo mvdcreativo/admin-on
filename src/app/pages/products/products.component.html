@@ -4,7 +4,6 @@
         <mat-card-subtitle>Administrar Cursos</mat-card-subtitle>
 
         <div class="actions">
-
             <button mat-flat-button routerLink="/productos/nuevo-producto" color="primary">
                 <mat-icon class="material-icons-round">add</mat-icon> Crear
             </button>
@@ -16,7 +15,10 @@
             </button>
 
         </div>
-        <mvd-input-search (changeSearch)="search($event)" [noteFilterBy]="'Filtra por Título, Código o Dirección'" ></mvd-input-search>
+        <mvd-input-search (changeSearch)="search($event)" [noteFilterBy]="'Filtra por Título o id del curso'" ></mvd-input-search>
+        <div class="checkboxes">
+            <mat-checkbox color="primary" (change)="changeCheck()" *ngFor="let checkbox of checkboxes" [(ngModel)]="checkbox.value">{{ checkbox.name }}</mat-checkbox>
+        </div>
     </mat-card-header>
 
 

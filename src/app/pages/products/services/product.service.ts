@@ -10,6 +10,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResponsePaginate } from 'src/app/shared/interfaces/response';
 import { toFormData } from "src/app/shared/utils/forms/to-form-data";
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -32,7 +33,8 @@ export class ProductService {
   
   constructor(
     private http:HttpClient,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) { 
     // this.prueba = this.getProduct(107).subscribe()
   }
@@ -58,6 +60,26 @@ export class ProductService {
         }
         //snacbarr
         this.openSnackBar('Se creó correctamente','success-snack-bar')
+        //////////
+        return v.data
+      }),
+      catchError(error => this.errorHandler(error))
+    )
+
+  }
+  duplicateProduct(id): Observable<Product>{
+    const formData = new FormData();
+    formData.append('id',id)
+    return this.http.post<Response>(`${environment.API}clone`, formData).pipe(
+      map( v => {
+        if(v.data){
+          this.setProductOnEdit(v.data)
+
+          this.router.navigate(['/productos/producto', v.data.id])    
+          this.openSnackBar('Se creó correctamente','success-snack-bar')
+        }
+        //snacbarr
+
         //////////
         return v.data
       }),
@@ -117,13 +139,18 @@ export class ProductService {
 
 
 ///listar
-  getProducts(currentPage = 1, perPage = 20, filter='', sort= 'desc') : Observable<ResponsePaginate>{
+  getProducts(currentPage = 1, perPage = 20, filter='', sort= 'desc', status = '') : Observable<ResponsePaginate>{
+    var status_ids = ''
+    if(status){
+      status_ids = JSON.stringify(status)
+    }
     return this.http.get<ResponsePaginate>(`${environment.API}${environment.routesCRUD.products}`, {
       params: new HttpParams()
         .set('page', currentPage.toString())
         .set('filter', filter)
         .set('sort', sort)
         .set('per_page', perPage.toString())
+        .set('status', status_ids)
 
     }).pipe(map(
       res => {

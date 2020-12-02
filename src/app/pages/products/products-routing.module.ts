@@ -5,6 +5,7 @@ import { ProductsComponent } from './products.component';
 import { ProductComponent } from './product/product.component';
 
 const routes: Routes = [
+  { path: 'nuevo-producto/:original_id', component: ProductComponent },
   { path: 'nuevo-producto', component: ProductComponent },
   { path: 'producto/:id', component: ProductComponent },
   { path: '', component: ProductsComponent },

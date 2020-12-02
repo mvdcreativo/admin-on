@@ -2,8 +2,9 @@ export interface Table {
 }
 
 export interface Column {
-    title: String;
-    col: String;
-    type?: String;
-    pipe?: any
+    title: string;
+    col: string;
+    type?: string;
+    pipe?: any;
+    class?: string;
 }
