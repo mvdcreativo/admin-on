@@ -1,3 +1,5 @@
+import { Neighborhood } from 'src/app/shared/interfaces/ubication';
+
 export interface Account {
     user_id: number;
     bio: string;
@@ -19,6 +21,8 @@ export interface Account {
     role: Role;
     n_doc_iden: any;
     type_doc_iden: any;
+    neighborhood: Neighborhood;
+    neighborhood_id: number;
 }
 
 
