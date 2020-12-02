@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
-import { State, City, Municipality, Neighborhood } from "src/app/shared/interfaces/ubication";
+import { State, City, Neighborhood } from "src/app/shared/interfaces/ubication";
 import { map } from 'rxjs/operators';
 import { Response, ResponsePaginate } from 'src/app/shared/interfaces/response';
 
@@ -18,18 +18,13 @@ export class UbicationService {
 
 
   public getStates(): Observable<State[]> {
-    return this.http.get<ResponsePaginate>(environment.API + 'provinces').pipe(
+    return this.http.get<ResponsePaginate>(environment.API + 'states').pipe(
       map( v => v.data.data)
     );
   }
 
   public getCities(): Observable<City[]> {
     return this.http.get<ResponsePaginate>(environment.API + 'cities').pipe(
-      map( v => v.data.data)
-    );;
-  }
-  public getMunicipality(): Observable<Municipality[]> {
-    return this.http.get<ResponsePaginate>(environment.API + 'municipalities').pipe(
       map( v => v.data.data)
     );
   }

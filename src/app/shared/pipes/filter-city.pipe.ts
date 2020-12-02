@@ -9,7 +9,7 @@ export class FilterCityPipe implements PipeTransform {
     console.log(items);
     
     if(id){
-      return items?.filter(item => item.province_id == id);
+      return items?.filter(item => item.state_id == id);
     } 
     return items;  
   }

@@ -24,7 +24,6 @@ export class StatesComponent implements OnInit, OnDestroy {
     { title: 'id', col: 'id' },
     { title: 'Nombre', col: 'name' },
     { title: 'Coordenadas', col: 'code' },
-    { title: 'País ', col: 'country' },
   ]
 
   dataSource: Observable<any>;
@@ -67,7 +66,6 @@ export class StatesComponent implements OnInit, OnDestroy {
           id: x.id,
           code: x.code,
           name: x.name,
-          country: x.country.name,
         }
       })
       return dataTable;

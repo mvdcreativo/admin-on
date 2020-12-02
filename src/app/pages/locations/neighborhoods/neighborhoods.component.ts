@@ -22,7 +22,7 @@ export class NeighborhoodsComponent implements OnInit {
    { title: 'id', col: 'id' },
    { title: 'Nombre', col: 'name' },
    { title: 'Coordenadas', col: 'code' },
-   { title: 'Municipalidad ', col: 'municipality' },
+   { title: 'Ciudad ', col: 'city' },
  ]
 
 dataSource: Observable<any>;
@@ -77,10 +77,9 @@ loadData(){
      id: x.id,
      code: x.code,
      name: x.name,
-     municipality: x.municipality.name,
-     municipality_id: x.municipality.id,
-     city_id: x.municipality.city.id,
-     state_id: x.municipality.city.province.id,
+     city: x.city.name,
+     city_id: x.city.id,
+     state_id: x.city.state.id,
     }
   })
   return dataTable;

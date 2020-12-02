@@ -22,7 +22,7 @@ export class CitiesComponent implements OnInit {
     { title: 'id', col: 'id' },
     { title: 'Nombre', col: 'name' },
     { title: 'Coordenadas', col: 'code' },
-    { title: 'Provincia ', col: 'state' },
+    { title: 'Departamento ', col: 'state' },
   ]
 
   dataSource: Observable<any>;
@@ -72,8 +72,8 @@ export class CitiesComponent implements OnInit {
           id: x.id,
           code: x.code,
           name: x.name,
-          state: x.province.name,
-          state_id: x.province.id
+          state: x.state.name,
+          state_id: x.state.id
         }
       })
       return dataTable;

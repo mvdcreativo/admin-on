@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { UbicationService } from 'src/app/shared/services/ubications/ubication.service';
 import { Observable } from 'rxjs';
-import { State, City, Municipality, Neighborhood } from 'src/app/shared/interfaces/ubication';
+import { State, City, Neighborhood } from 'src/app/shared/interfaces/ubication';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgSwitchDefault } from '@angular/common';
 
@@ -17,12 +17,10 @@ export class ModalLocationsComponent implements OnInit {
 
   states: Observable<State[]>;
   cities: Observable<City[]>;
-  municipalities: Observable<Municipality[]>;
   neighborhoods: Observable<Neighborhood[]>;
 
   barrio:boolean = false;
   ciudad:boolean = false;
-  municipalidad:boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -57,10 +55,6 @@ export class ModalLocationsComponent implements OnInit {
       case "cities":
         this.ciudad = true
         break;
-      
-      case "municipalities":
-        this.municipalidad = true
-        break;
         
           
       default:
@@ -69,7 +63,6 @@ export class ModalLocationsComponent implements OnInit {
     
     this.states = this.ubicationService.getStates();
     this.cities = this.ubicationService.getCities();
-    this.municipalities = this.ubicationService.getMunicipality();
     this.neighborhoods = this.ubicationService.getNeighborhoods();
 
   }
@@ -89,8 +82,7 @@ export class ModalLocationsComponent implements OnInit {
         neighborhood_id:  [dataEdit?.neighborhood_id, Validators.required] ,
 
         city_id: [dataEdit?.city_id],
-        province_id: [dataEdit?.state_id],
-        municipality_id: [dataEdit?.municipality_id],
+        state_id: [dataEdit?.state_id],
 
       }
     )
@@ -100,16 +92,11 @@ export class ModalLocationsComponent implements OnInit {
 
   public onSelectState() {
     this.form.controls['city_id'].setValue(null, { emitEvent: false });
-    this.form.controls['municipality_id'].setValue(null, { emitEvent: false });
     this.form.controls['neighborhood_id'].setValue(null, { emitEvent: false });
   }
   public onSelectCity() {
-    this.form.controls['municipality_id'].setValue(null, { emitEvent: false });
     this.form.controls['neighborhood_id'].setValue(null, { emitEvent: false });
 
-  }
-  public onSelectMunicipality() {
-    this.form.controls['neighborhood_id'].setValue(null, { emitEvent: false });
   }
   public onSelectNeighborhood() {
     // this.form.controls['street'].setValue(null, {emitEvent: false});

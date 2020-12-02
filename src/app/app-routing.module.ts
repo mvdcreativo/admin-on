@@ -12,9 +12,8 @@ const routes: Routes = [
     children: [
       { path: '', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
       { path: 'productos', loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule) },
-      { path: 'provincias', loadChildren: () => import('./pages/locations/states/states.module').then(m => m.StatesModule) },
+      { path: 'departamentos', loadChildren: () => import('./pages/locations/states/states.module').then(m => m.StatesModule) },
       { path: 'ciudades', loadChildren: () => import('./pages/locations/cities/cities.module').then(m => m.CitiesModule) },
-      { path: 'municipalidades', loadChildren: () => import('./pages/locations/municipalities/municipalities.module').then(m => m.MunicipalitiesModule) },
       { path: 'barrios', loadChildren: () => import('./pages/locations/neighborhoods/neighborhoods.module').then(m => m.NeighborhoodsModule) },
       { path: 'categorias', loadChildren: () => import('./pages/categories/categories.module').then(m => m.CategoriesModule) },
       { path: 'accounts', loadChildren: () => import('./pages/accounts/accounts.module').then(m => m.AccountsModule) },
