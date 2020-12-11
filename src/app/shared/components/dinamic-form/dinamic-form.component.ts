@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SelectIconsComponent } from '../modals/select-icons/select-icons.component';
 import { IconsService } from '../../services/icons/icons.service';
 import { Icon } from '../modals/select-icons/insterfaces/icon';
+import { User } from 'src/app/pages/accounts/interfaces/account';
 
 @Component({
   selector: 'mvd-dinamic-form',
@@ -24,7 +25,9 @@ import { Icon } from '../modals/select-icons/insterfaces/icon';
 })
 export class DinamicFormComponent implements OnInit {
 
-  @Input() fields : Fields[] = null
+  @Input() fields : Fields[] = null;
+  @Input() locationFieldsData : any;
+  @Input() userEdit: User;
   @Output() value : EventEmitter<any> = new EventEmitter
 
   subscription: Subscription
@@ -32,6 +35,12 @@ export class DinamicFormComponent implements OnInit {
   icons: Observable<Icon[]>;
   messageUpload: string = null;
   imgPreview: string | ArrayBuffer;
+  dataLocation: { typeLocation: string; elementEdit: { city: any; city_id: any; code: any; neighborhood_id: any; name: any; state_id: any; }; }= null;
+  neighborhood_id: number = null;
+  formLocation: FormGroup = null;
+  formValid = false;
+  colorPreview
+  public form : FormGroup
 
 
   constructor(
@@ -41,26 +50,24 @@ export class DinamicFormComponent implements OnInit {
   ) { 
     this.form = this.fb.group({})
   }
-  
-  colorPreview
-  public form : FormGroup
 
   ngOnInit(): void {
     this.buildForm()
     console.log(this.form.value);
-
-
-
-    
     
   }
 
 
   changeForm(value){
     // console.log(value);
-    
-          this.value.emit(value)
+    const valueform = value;
+    if(this.neighborhood_id && this.dataLocation){
+      valueform.neighborhood_id = this.neighborhood_id
+    }else{
+      this.form.setErrors({'invalid': true})
+    }
 
+    this.value.emit(value)
   }
 
   private buildForm(){
@@ -164,6 +171,35 @@ export class DinamicFormComponent implements OnInit {
         this.imgPreview = null;
         this.form.get('image').patchValue(null)
       }
+    }
+  }
+
+
+
+  setFormLocation(e:FormGroup){
+    this.formLocation = e;
+    if(!this.form.get('neighborhood_id')){
+      this.form.addControl( 'neighborhood_id' , this.fb.control(e.get('neighborhood_id').value, Validators.required));
+    }else{
+      this.form.get('neighborhood_id').setValue(e.get('neighborhood_id').value)
+    }
+    console.log(this.form.value);
+    
+ 
+  }
+  setDataLocation(){
+    const neighborhood = this.userEdit?.account?.neighborhood
+    const formatNeighborhood = {
+        city: neighborhood?.city.name,
+        city_id: neighborhood?.city_id,
+        code: neighborhood?.code,
+        neighborhood_id: neighborhood?.id,
+        name: neighborhood?.name,
+        state_id: neighborhood?.city.state_id,
+    }
+    this.dataLocation = {
+      typeLocation: "user",
+      elementEdit: formatNeighborhood
     }
   }
 }

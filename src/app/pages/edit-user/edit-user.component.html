@@ -6,7 +6,7 @@
     </mat-card-header>
     <ng-container *ngIf="fields">
 
-        <mvd-dinamic-form [fields]="fields" (value)="action($event)" ></mvd-dinamic-form>
+        <mvd-dinamic-form [fields]="fields" [locationFieldsData]="dataLocation" (value)="action($event)" ></mvd-dinamic-form>
 
     </ng-container>
 

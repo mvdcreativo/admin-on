@@ -87,7 +87,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
     MatNativeDateModule,
     MatExpansionModule,
     ColorPickerModule,
-    MatChipsModule
+    MatChipsModule,
+    MatRadioModule
   ],
 
 })

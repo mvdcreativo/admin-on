@@ -4,54 +4,8 @@
             <mat-card-header>
                 <mat-card-title>Nuevo Registro</mat-card-title>
             </mat-card-header>
-            <form [formGroup]="form">
-                <mat-form-field  *ngIf="states && barrio || ciudad" class="" appearance="outline">
-                    <mat-label>Departamento</mat-label>
-                    <mat-select placeholder="Seleccione Departamento..." formControlName="state_id"
-                        (selectionChange)="onSelectState()">
-                        <mat-option *ngFor="let state of states | async" 
-                            [value]="state.id">
-                            {{state.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            
-                <mat-form-field *ngIf="cities && barrio" class="" appearance="outline">
-                    <mat-label>Ciudad</mat-label>
-                    <mat-select placeholder="Seleccione Ciudad..." formControlName="city_id"
-                        (selectionChange)="onSelectCity()">
-                        <mat-option *ngFor="let city of cities | async | filterCity: form.get('state_id').value"
-                            [value]="city.id">
-                            {{city.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            
-            
-                <!-- <mat-form-field  *ngIf="neighborhoods " class="" appearance="outline">
-                    <mat-label>Localidad/Barrio</mat-label>
-                    <mat-select placeholder="Selecciona Localidad/Barrio..." formControlName="neighborhood_id"
-                        (selectionChange)="onSelectNeighborhood()">
-                        <mat-option
-                            *ngFor="let neighborhood of neighborhoods | async | filterNeighborhoods: form.get('municipality_id').value"
-                            [value]="neighborhood.id">
-                            {{neighborhood.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field> -->
         
-        
-                <mat-form-field class="mvd-col1--1" appearance="outline">
-                    <mat-label>Nombre</mat-label>
-                    <input formControlName="name" matInput placeholder="Nombre">
-                </mat-form-field>
-                <mat-form-field class="mvd-col1--1" appearance="outline">
-                    <mat-label>Coordenadas</mat-label>
-                    <input formControlName="code" matInput placeholder="Coordenadas">
-                </mat-form-field>
-            </form>
-        
-        
+            <mvd-form-locations *ngIf="data" [data]="data" (changeForm)="setForm($event)"></mvd-form-locations>
             <!-- <span class="border"></span> -->
             <div class="btn-actions">
                 <span></span>

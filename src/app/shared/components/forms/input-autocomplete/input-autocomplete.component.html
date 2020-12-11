@@ -1,0 +1,17 @@
+<div class="searchContent" floatLabel="never" appearance="none">
+    <input class="input" [value]="valueSet" [formControl]="searchInput" type="text" [placeholder]="noteFilterBy" autocomplete="/-_¿">
+</div>
+<div  
+*ngIf="valueInput && resSearch?.length >= 1"
+class="serarch-result animate__animated animate__flipInX">
+    <ul>
+        <li class="animate__animated animate__flipInX" 
+        *ngFor="let item of resSearch" 
+        (click)="selected(item)">
+            <!-- {{ item.account?.n_doc_iden }} - {{ item.name }} -->
+            <span>{{ displayItem(item) }}</span>
+            <mat-icon class="material-icons-round" color="primary">chevron_right</mat-icon>   
+        </li>
+        <!-- <li class="animate__animated animate__flipInX" *ngIf="(resSearch |async)?.length < 1"> Aún sin resultado</li> -->
+    </ul>
+</div>

@@ -30,7 +30,8 @@ export const environment = {
     lessons: "lessons",
     schedules: "schedules",
     users: "users",
-    orders: "orders"
+    orders: "orders",
+    enrollments:"enrollments"
   
   }
 

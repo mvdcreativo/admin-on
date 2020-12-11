@@ -7,7 +7,7 @@ import { UsersService } from './services/users.service';
 
 import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
-import { Validators } from "@angular/forms";
+import { FormGroup, Validators } from "@angular/forms";
 import {default as _rollupMoment} from 'moment';
 import { RoleService } from 'src/app/shared/services/roles/role.service';
 import { OptionSelect } from 'src/app/shared/components/dinamic-form/interfaces/fields';
@@ -29,6 +29,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
   fields;
   urlRequest: any[];
   typesDocIden: { name: string; value: string; }[];
+  dataLocation: { typeLocation: string; elementEdit: { city: string; city_id: number; code: string; neighborhood_id: number; name: string; state_id: number; }; };
+  returUrl: string = "";
 
   constructor(
     private activateRouter: ActivatedRoute,
@@ -62,6 +64,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
         
       }
     )
+    this.activateRouter.queryParamMap.subscribe((params:Params) => this.returUrl = params.params.returnUrl)
   }
 
 
@@ -71,19 +74,39 @@ export class EditUserComponent implements OnInit, OnDestroy {
   }
 
   private getRoles(){
-    this.subscriptions.push( this.roleService.getRoles().subscribe(
-      res=> {
-        this.optionsRoles = res.map(v=> {return {name : v.name, value: v.id}})        
-        console.log(this.optionsRoles);
-        this.fields = this.setFields()
-        
-      }
-    ) )
+    this.subscriptions.push( 
+      this.roleService.getRoles().subscribe(
+        res=> {
+          this.optionsRoles = res.map(v=> {return {name : v.name, value: v.id}})        
+          this.fields = this.setFields()
+        }
+      )
+    )
   }
 
+  setFormLocation(e:FormGroup){
 
+  }
+  setDataLocation(){
+
+    const neighborhood = this.userEdit?.account?.neighborhood
+    const formatNeighborhood = {
+        city: neighborhood?.city.name,
+        city_id: neighborhood?.city_id,
+        code: neighborhood?.code,
+        neighborhood_id: neighborhood?.id,
+        name: neighborhood?.name,
+        state_id: neighborhood?.city.state_id,
+    }
+    this.dataLocation = {
+      typeLocation: "user",
+      elementEdit: formatNeighborhood
+    }
+  }
   setFields() {
     // console.log(elementEdit);
+    this.setDataLocation()
+
     this.typesDocIden = [
       {name: 'CI', value:'CI'},
       {name: 'Pasaporte', value:'Pasaporte'}
@@ -98,7 +121,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
         { nameControl: 'type_doc_iden', type: 'select', value: this.userEdit?.account.type_doc_iden, label: 'Tipo documento de identidad',options: this.typesDocIden , validators: [Validators.required] },
         { nameControl: 'n_doc_iden', type: 'text', value: this.userEdit?.account.n_doc_iden, label: 'Nº documento', validators: [Validators.required] },
         { nameControl: 'email', type: 'text', value: this.userEdit?.email, label: 'Email', validators: [Validators.required] },
-        { nameControl: 'address_one', type: 'text', value: this.userEdit?.account.address_one, label: 'Dirección' },
         { nameControl: 'birth', type: 'date', value:  moment(this.userEdit?.account.birth).format('YYYY-MM-DD HH:mm:ss'), label: 'Fecha de nacimiento' },
         { nameControl: 'certificated', type: 'text', value: this.userEdit?.account.certificated, label: 'Profesión/es / Títulos', validators: [Validators.required] },
         { nameControl: 'n_identification', type: 'text', value: this.userEdit?.account.n_identification, label: 'Nº funcionario', validators: [Validators.required] },
@@ -106,6 +128,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
         { nameControl: 'phone_one', type: 'text', value: this.userEdit?.account.phone_one, label: 'Teléfono' },
         { nameControl: 'role_id', type: 'select', value: 1, label: 'Rol en Sistema', options: this.optionsRoles , validators: [Validators.required]},
         { nameControl: 'bio', type: 'textarea', value: this.userEdit?.account.bio, label: 'Descripción / Bio', validators: [Validators.required] },
+        { nameControl: 'address_one', type: 'text', value: this.userEdit?.account.address_one, label: 'Dirección',class:'mvd-col1--1' },
+
       ]
       return fields
 
@@ -119,13 +143,13 @@ export class EditUserComponent implements OnInit, OnDestroy {
         { nameControl: 'type_doc_iden', type: 'select', value: this.userEdit?.account.type_doc_iden, label: 'Tipo documento de identidad',options: this.typesDocIden , validators: [Validators.required] },
         { nameControl: 'n_doc_iden', type: 'text', value: this.userEdit?.account.n_doc_iden, label: 'Nº documento', validators: [Validators.required] },
         { nameControl: 'email', type: 'text', value: this.userEdit?.email, label: 'Email', validators: [Validators.required] },
-        { nameControl: 'address_one', type: 'text', value: this.userEdit?.account.address_one, label: 'Dirección' },
         { nameControl: 'birth', type: 'date', value:  moment(this.userEdit?.account.birth).format('YYYY-MM-DD HH:mm:ss'), label: 'Fecha de nacimiento' },
         // { nameControl: 'certificated', type: 'text', value: this.userEdit?.account.certificated, label: 'Profesión/es / Títulos', validators: [Validators.required] },
         // { nameControl: 'n_identification', type: 'text', value: this.userEdit?.account.n_identification, label: 'Nº funcionario', validators: [Validators.required] },
         { nameControl: 'phone_two', type: 'text', value: this.userEdit?.account.phone_two, label: 'Celular', validators: [Validators.required] },
         { nameControl: 'phone_one', type: 'text', value: this.userEdit?.account.phone_one, label: 'Teléfono' },
         { nameControl: 'role_id', type: 'select', value: 2, label: 'Rol en Sistema', options: this.optionsRoles , validators: [Validators.required]},
+        { nameControl: 'address_one', type: 'text', value: this.userEdit?.account.address_one, label: 'Dirección', class:'mvd-col1--1' },
         // { nameControl: 'bio', type: 'textarea', value: this.userEdit?.account.bio, label: 'Descripción', validators: [Validators.required] },
       ]     
       return fields
@@ -150,7 +174,12 @@ export class EditUserComponent implements OnInit, OnDestroy {
   storeUser(data){
     this.userService.storeUser(data).pipe(take(1)).subscribe(
       res=> {
-          this.router.navigate([`/${this.urlRequest[1]}`])
+          if (this.returUrl) {
+            this.router.navigate([`/${this.returUrl}`, res.id])
+
+          }else{
+            this.router.navigate([`/${this.urlRequest[1]}`])
+          }
       }
     )
   }

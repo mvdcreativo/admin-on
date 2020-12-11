@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Column } from 'src/app/shared/components/data-table/interfaces/table';
@@ -53,6 +54,8 @@ export class PaymentsComponent implements OnInit {
     private paymentsService: PaymentsService,
     public dialog: MatDialog,
     private statusService: StatusService,
+    private router: Router
+
   ) {
     this.result = this.paymentsService.resultItems$
 
@@ -114,7 +117,7 @@ export class PaymentsComponent implements OnInit {
 
     if (event.action === "edit") {
       
-      this.openDialog(event.element)
+      this.router.navigate(['/inscripciones' , event.element.id])
     }
 
   }

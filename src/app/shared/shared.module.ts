@@ -13,6 +13,12 @@ import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { ModalReutilComponent } from './components/modals/modal-reutil/modal-reutil.component';
 import { DinamicFormComponent } from './components/dinamic-form/dinamic-form.component';
 import { SelectIconsComponent } from './components/modals/select-icons/select-icons.component';
+import { FormLocationsComponent } from './components/forms/form-locations/form-locations.component';
+import { ModalSearchComponent } from './components/modals/modal-search/modal-search.component';
+import { ProductsModule } from '../pages/products/products.module';
+import { ProductComponent } from '../pages/products/product/product.component';
+import { InputAutocompleteComponent } from './components/forms/input-autocomplete/input-autocomplete.component';
+import { OrderPdfComponent } from './components/pdfs/orders/order-pdf/order-pdf.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +30,10 @@ import { SelectIconsComponent } from './components/modals/select-icons/select-ic
     ModalReutilComponent,
     DinamicFormComponent,
     SelectIconsComponent,
+    FormLocationsComponent,
+    ModalSearchComponent,
+    InputAutocompleteComponent,
+    OrderPdfComponent,
   ],
   imports: [
     CommonModule,
@@ -31,7 +41,7 @@ import { SelectIconsComponent } from './components/modals/select-icons/select-ic
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    PipesModule
+    PipesModule,
   ],
   exports: [
     MaterialModule,
@@ -43,6 +53,9 @@ import { SelectIconsComponent } from './components/modals/select-icons/select-ic
     ModalLocationsComponent,
     ModalReutilComponent,
     DinamicFormComponent,
+    FormLocationsComponent,
+    InputAutocompleteComponent,
+    OrderPdfComponent
   ]
 })
 export class SharedModule { }

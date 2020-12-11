@@ -1,0 +1,27 @@
+<mat-card class="" >
+    <mat-card-header>
+        <mat-card-title >Generar Pago</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+        <label id="example-radio-group-label">Selecciona el Metodo Pago</label>
+        <mat-radio-group
+        color="primary"
+        aria-labelledby="example-radio-group-label"
+        class="radio-group"
+        [(ngModel)]="paymentMethod">
+            <mat-radio-button value="MP">Mercado Pago</mat-radio-button>
+            <mat-radio-button value="PL">Pago en Local</mat-radio-button>
+        </mat-radio-group>
+    </mat-card-content>
+
+    <mat-card-actions align="center">
+        <button mat-flat-button (click)="onNoClick()"> Cancelar </button>
+
+        <button mat-flat-button (click)="action()" [disabled]="!paymentMethod" color="primary"> Confirmar </button>
+
+    </mat-card-actions>
+
+    <!-- <span class="border"></span> -->
+
+</mat-card>

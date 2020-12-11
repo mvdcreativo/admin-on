@@ -39,6 +39,7 @@ export interface LengthUnit {
 export interface UserInstructor {
     id: number;
     name: string;
+    last_name: string;
     email: string;
     email_verified_at?: any;
     created_at: Date;

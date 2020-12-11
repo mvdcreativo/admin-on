@@ -11,6 +11,7 @@ import { Order } from "../interfaces/order";
   providedIn: 'root'
 })
 export class PaymentsService {
+  idOrder: number;
 
 
   constructor(
@@ -21,8 +22,15 @@ export class PaymentsService {
 
 
   private resultSubject$: BehaviorSubject<ResponsePaginate> = new BehaviorSubject(null)
+  private orderEditSubject$ : BehaviorSubject<Order> = new BehaviorSubject<Order>(null)
+
+
   public get resultItems$() {
     return this.resultSubject$
+  }
+  setProductOnEdit(value){
+    this.idOrder = value?.id;
+    this.orderEditSubject$.next(value)
   }
   public setItems(value) {
     this.resultSubject$.next(value)
@@ -31,7 +39,7 @@ export class PaymentsService {
   storePayment(data): Observable<Order>{
     return this.http.post<Response>(`${environment.API}${environment.routesCRUD.orders}`, data).pipe(
       map( v => {
-        this.getPayments(1, 20, '', 'desc').pipe(take(1)).subscribe()
+        
         //snacbarr
         this.openSnackBar('Se creó correctamente','success-snack-bar')
         //////////
@@ -39,6 +47,11 @@ export class PaymentsService {
       }),
       catchError(error => this.errorHandler(error))
     )
+
+  }
+
+  storeOrder(data): Observable<any>{
+    return this.http.post<Response>(`${environment.API}${environment.routesCRUD.orders}`, data)
 
   }
 
@@ -57,14 +70,14 @@ export class PaymentsService {
   }
 
   ///listar
-  getPayments(currentPage = 1, perPage = 20, filter = '', sort = 'desc'): Observable<ResponsePaginate> {
+  getPayments(currentPage = 1, perPage = 20, filter = '', sort = 'desc', course_id = ''): Observable<ResponsePaginate> {
     return this.http.get<ResponsePaginate>(`${environment.API}${environment.routesCRUD.orders}`, {
       params: new HttpParams()
         .set('page', currentPage.toString())
         .set('filter', filter)
         .set('sort', sort)
         .set('per_page', perPage.toString())
-
+        .set('course_id', course_id)
     }).pipe(map(
       res => {
         console.log(res);
@@ -96,6 +109,18 @@ export class PaymentsService {
     )
   }
 
+  getPayment(id):Observable<Order>{
+    return this.http.get<Response>(`${environment.API}${environment.routesCRUD.orders}/${id}`).pipe(map(
+      res => {
+        this.setItems(res.data)
+        
+        const resp = res.data
+        return resp;
+      }
+    ),
+    catchError(error => this.errorHandler(error))
+    )
+  }
 
 
   openSnackBar(message: string, refClass: string, action: string = '') {

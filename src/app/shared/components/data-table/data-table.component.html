@@ -30,6 +30,14 @@
             <th mat-header-cell *matHeaderCellDef> Acciones </th>
             <td mat-cell *matCellDef="let element">
 
+                <button *ngIf="isPageProduct()" mat-button
+                class="buttons-actions" 
+                (click)="addEnroll(element)" 
+                matTooltip="Nueva inscripción"  
+                matTooltipClass="tips">
+                    <mat-icon>person_add</mat-icon>
+                </button>
+
                 <button *ngIf="isPageProduct()" mat-button class="buttons-actions" 
                 (click)="cloneItem(element)" 
                 matTooltip="Nuevo Inicio" 
@@ -46,9 +54,9 @@
                     <mat-icon >menu_open</mat-icon>
                 </button>
                 
-                <button mat-button
+                <button mat-button *ngIf="!isPaymentEnroll()"
                 class="buttons-actions" 
-                (click)="deleteItem(element)" 
+                (click)="deleteItem(element,'Será eliminado')" 
                 matTooltip="Eliminar"  
                 matTooltipClass="tips">
                     <mat-icon>delete_outline</mat-icon>

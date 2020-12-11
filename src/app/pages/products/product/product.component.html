@@ -28,6 +28,11 @@
                 
             </mat-tab>
 
+            <mat-tab label="Inscripciones" *ngIf="edit">
+                
+                <mvd-inscripciones [course_id]="productEdit.id" ></mvd-inscripciones>
+            </mat-tab>
+
         </mat-tab-group>
     </ng-container>
 

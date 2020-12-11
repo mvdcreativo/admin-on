@@ -75,7 +75,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   
   
   ngOnInit(): void {
-    
     this.getProducts(this.pageDefault, this.perPage, this.filter, this.orden, this.statusSelected)
 
   }

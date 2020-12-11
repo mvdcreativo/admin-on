@@ -1,0 +1,56 @@
+<mat-card class="" >
+    <button class="btn-close-modal" color="primary" mat-mini-fab (click)="onNoClick()" ><mat-icon>close</mat-icon></button>
+    <mat-card-header>
+        <mat-card-title>Datos de Pago</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+        <form [formGroup]="form">     
+            <mat-form-field class="mvd-col1-3"  appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input formControlName="name" matInput  placeholder="Nombre" type="text" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field  class="mvd-col3-5"  appearance="outline">
+                <mat-label>Apellido</mat-label>
+                <input formControlName="last_name" matInput  placeholder="Apellido" type="text" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field class="mvd-col1-3" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input formControlName="name" matInput  placeholder="Email" type="text" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Tipo Documento</mat-label>
+                <mat-select formControlName="type_doc_iden"  placeholder="Tipo Documento">
+                    <mat-option value="CI">CI</mat-option>
+                    <mat-option value="Pasaporte">Pasaporte</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field  appearance="outline">
+                <mat-label>Nº Documento</mat-label>
+                <input formControlName="n_doc_iden" matInput  placeholder="Numero de documento" type="text" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field class="mvd-col1-4" appearance="outline">
+                <mat-label>Dirección</mat-label>
+                <input formControlName="address_one" matInput  placeholder="Dirección" type="text" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field  appearance="outline">
+                <mat-label>Teléfono</mat-label>
+                <input formControlName="phone_one" matInput  placeholder="Teléfono" type="text" autocomplete="off">
+            </mat-form-field>
+
+        </form>
+
+        <h2>Curso:</h2>
+        <p>{{ course.title }}</p>
+        <p>Inicio:  {{ course.date_ini | date:"dd/MM/yyyy"}}</p>
+    </mat-card-content>
+    <mat-card-actions align="end">
+            <button mat-flat-button class="" (click)="action()" type="submit" [disabled]="!form.valid" color="primary">Confirmar y Pagar</button>
+    </mat-card-actions>
+</mat-card>

@@ -12,18 +12,27 @@ import { AdquiredSkillsComponent } from './components/tab2/adquired-skills/adqui
 import { SectionsLesonsComponent } from './components/sections-lesons/sections-lesons.component';
 import { LessonsComponent } from './components/sections-lesons/lessons/lessons.component';
 import { SchedulesComponent } from './components/schedules/schedules.component';
+import { InscripcionesComponent } from './components/inscripciones/inscripciones.component';
 
 
 @NgModule({
   declarations: [
     ProductsComponent, 
     FormProductComponent, 
-    ProductComponent, Tab2Component, AdquiredSkillsComponent, SectionsLesonsComponent, LessonsComponent, SchedulesComponent, 
+    ProductComponent, 
+    Tab2Component, 
+    AdquiredSkillsComponent, 
+    SectionsLesonsComponent, 
+    LessonsComponent, 
+    SchedulesComponent, InscripcionesComponent, 
   ],
   imports: [
     CommonModule,
     ProductsRoutingModule,
     SharedModule,
+  ],
+  exports: [
+    ProductsComponent
   ]
 })
 export class ProductsModule { }

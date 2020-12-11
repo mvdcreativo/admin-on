@@ -103,6 +103,7 @@ itemAction(event){
   }
 
   if(event.action === "edit"){
+    
     this.openDialog(event.element)
   }
 }

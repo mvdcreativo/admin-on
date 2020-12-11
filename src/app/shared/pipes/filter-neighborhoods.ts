@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterNeighborhoodsPipe implements PipeTransform {
   transform(items:Array<any>, id?) {
     if(id){
-      return items?.filter(item => item.municipality_id == id);
+      return items?.filter(item => item.city_id == id);
     } 
     return items;  
   }

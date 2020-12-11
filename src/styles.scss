@@ -77,7 +77,9 @@ a{
       color: var(--color-secondary)
   }
 }
-
+.search{
+  z-index: 1000!important;
+}
 .mat-drawer-side{
   border-right: none;
 }
@@ -275,6 +277,9 @@ a{
       justify-content: space-around!important;
       justify-items: right;
       column-gap: 5px;
+      .btn-simple{
+        background-color: var(--background-gral);
+      }
     }
   }
 
@@ -293,6 +298,16 @@ a{
   }
 
 }
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
+  max-width: 180px!important;
+  text-align: right;
+  width: 16%!important;
+}
+th.mat-header-cell:last-of-type{
+  text-align: center;
+}
+
+
 .border{
   position: absolute;
   width: 10px;

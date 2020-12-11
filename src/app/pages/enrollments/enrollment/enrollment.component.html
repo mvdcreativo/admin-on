@@ -1,0 +1,91 @@
+<mat-card class="card mat-elevation-z16 animate__animated animate__slideInRight">
+    <mat-card-header>
+        <mat-card-title>Inscripción</mat-card-title>
+        <mat-card-subtitle>Detalles de la Inscripción</mat-card-subtitle>
+        <div class="actions" >
+            <div class="price" *ngIf="course | async as course ; else loading">
+                <h1>{{ course.currency.symbol }} {{ course.price | number }}</h1>
+            </div>
+            <button *ngIf="user && !view && (course | async) as course" class="confirm-btn animate__animated animate__fadeInRight" (click)="pay(course)" mat-flat-button color="primary" >Confirmar</button>
+            <button *ngIf="order|async" (click)="pdf()" class="confirm-btn animate__animated animate__fadeInRight" mat-flat-button color="primary" ><mat-icon>print</mat-icon>Imprimir</button>
+        </div>
+
+
+    </mat-card-header>
+    <ng-container >
+        
+            <div class="data-user">
+                <h2 class="">Usuario</h2>
+                
+                <div class="content-search" *ngIf="!view">
+                    <div [ngClass]="searched ? 'search': 'none'">
+                        <mvd-input-autocomplete 
+                            [displayProperties] ="display"
+                            [valueSet]="resValue"
+                            [resSearch]="(resSearch |async)" 
+                            (changeSearch)="search($event)"
+                            (selectChange)="selectUser($event)"
+                            class=" mvd-col1-2"
+                            [noteFilterBy]="'Filtra por Nombre, ID, Email, Nº Doc'" >
+                        </mvd-input-autocomplete>
+                    </div>
+                    <button class="btn-search" (click)="clikBuscar()"  *ngIf="!searched" mat-flat-button color="primary">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                    <button mat-flat-button (click)="addUser()" color="primary">
+                        <mat-icon>person_add</mat-icon>
+                    </button>
+
+
+                </div>
+                <div  *ngIf="user" class="selct-user animate__animated animate__fadeInTop">
+                    <img [src]="user.account.image || '../../../../assets/images/no-image.svg'" alt="">
+                    <ul  class="animate__animated animate__fadeInTop animate__zoomIn">
+                        <li><span>Nombre y Apellido:</span> {{ user.name }} {{ user.last_name }}</li>
+                        <li><span>Documento:</span> {{ user.account.n_doc_iden }}</li>
+                        <li><span>Email:</span>{{ user.email }}</li>
+                        <li><span>Teléfonos:</span>  {{ user.account.phone_one }} {{ user.account.phone_two }} </li>
+                        <li><span>Dirección:</span> {{ user.account.address_one }} - {{ user.account.neighborhood.name }} - {{ user.account.neighborhood.city.name }} </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="data-product">
+                <h2>Curso</h2>
+                <div  *ngIf="course |async as course; else loading" class="selct-course">
+                    <ul  class="">
+                        <li><span>Titulo:</span> {{ course.title }}</li>
+                        <li><span>Fecha de Inicio:</span> {{ course.date_ini | date:"dd/MM/yyyy" }}</li>
+                        <li><span>Horarios:</span> 
+                            <ul>
+                                <li *ngFor="let item of course.schedules">{{ item.day }} de {{ item.h_ini }} a {{ item.h_end }}</li>
+                            </ul>
+                        </li>
+                        <li><span>Cupos:</span> {{ course.cupos }}</li>
+                        <li><span>Cupos disponibles:</span> {{ course.cupos - course.cupos_confirmed }}</li>
+                        <li><span>Docente:</span>  {{ course.user_instructor.name }} {{ course.user_instructor.last_name }} </li>
+                    </ul>
+                </div>
+                <mat-card-actions align="end" >
+                    
+
+                </mat-card-actions>
+                
+            </div>
+        
+
+    </ng-container>
+
+    <ng-template #loading>
+        <div class="div-content">
+            <div class="loading"><div></div><div></div><div></div></div>
+    
+        </div>
+    </ng-template>
+    
+    <span class="border"></span>
+</mat-card>
+
+<ng-container *ngIf="print && dataPrint" >
+    <mvd-order-pdf [dataPrint]="dataPrint" style="display: none;"></mvd-order-pdf>
+</ng-container>

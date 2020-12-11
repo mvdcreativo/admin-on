@@ -40,24 +40,21 @@ export class DataTableComponent implements OnInit {
   }
 
   editItem(element) {
-
     const action = { action: 'edit', element: element }
     this.actionChange.emit(action)
-
-
   }
 
   cloneItem(element) {
-
-    const action = { action: 'clone', element: element }
-    this.actionChange.emit(action)
+    let message = "Creará un nuevo curso idéntico"
+    this.openDialog(element,'CLON', message)
   }
 
-  deleteItem(element) {
-    this.openDialog(element)
+  deleteItem(element, message?) {
+    this.openDialog(element,'DEL', message)
   }
 
-  openDialog(element): void {
+  openDialog(element, accion, message?): void {
+    !message ? message = "" : message = message;
     let name
     if (element?.name) {
       name = element.name
@@ -67,13 +64,20 @@ export class DataTableComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '350px',
-      data: { name: name, message: "", value: false }
+      data: { name: name, message: message, value: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result?.value) {
-        const action = { action: 'delete', element: element }
-        this.actionChange.emit(action)
+        if (accion === "DEL") {
+          const action = { action: 'delete', element: element }
+          this.actionChange.emit(action)
+        }
+
+        if (accion === "CLON") {
+          const action = { action: 'clone', element: element }
+          this.actionChange.emit(action)
+        }
       }
     });
 
@@ -97,5 +101,16 @@ export class DataTableComponent implements OnInit {
     const requestUrl = this.router.url.split("/")
     if (requestUrl[1] === "productos") return true;
     return false
+  }
+
+  isPaymentEnroll() {
+    const requestUrl = this.router.url.split("/")
+    if (requestUrl[1] === "inscripciones" || requestUrl[1] === "pagos") return true;
+    return false
+  }
+
+
+  addEnroll(e){
+    this.router.navigate(['/inscripciones/nueva', e.id])
   }
 }

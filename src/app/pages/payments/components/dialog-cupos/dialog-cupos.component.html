@@ -1,0 +1,18 @@
+<mat-card>
+  <h1 mat-dialog-title class="title">Cupos Completos</h1>
+  <div mat-dialog-content>
+      <p>Se acaban de completar los cupos para este horario o fecha de inicio de curso.</p>
+      <p>Verifica los cambios</p>
+      <p class="link">
+        <a (click)="onNoClick()" [routerLink]="['/productos/producto/'+data.id]"  >
+          <span>{{ data.title }}</span> 
+          <mat-icon>launch</mat-icon>
+        </a>
+      </p>
+  
+  </div>
+  <div mat-dialog-actions align="end">
+    <a mat-flat-button color="primary" [routerLink]="['/productos/producto/'+data.id]" (click)="onNoClick()" >Aceptar</a>
+  </div>
+
+</mat-card>

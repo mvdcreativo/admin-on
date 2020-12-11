@@ -1,0 +1,29 @@
+.mat-card{
+    box-shadow: none!important;
+    margin:0px!important;
+    box-sizing: border-box;
+    padding: 1.5rem!important;
+}
+
+form{
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    align-items: flex-start;    
+    justify-content: center;
+    padding: 1rem!important;
+    .btn-actions{
+        grid-column: 1/-1;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        button{
+            margin-left: auto;
+            margin-right: auto;
+            // padding: 10px 50px;
+        }
+    }
+}
