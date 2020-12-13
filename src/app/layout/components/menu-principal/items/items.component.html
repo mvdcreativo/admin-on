@@ -9,13 +9,13 @@
             <a mat-list-item [routerLink]="['/productos']" routerLinkActive="router-link-active" >Cursos Activos</a>
         </mat-expansion-panel>
     </mat-accordion>  -->
-    <a mat-list-item [routerLink]="['/inscripciones']" routerLinkActive="router-link-active" >Inscripciones</a>
-    <a mat-list-item [routerLink]="['/productos']" routerLinkActive="router-link-active" >Cursos</a>
-    <a mat-list-item [routerLink]="['/categorias']" routerLinkActive="router-link-active" >Categorias</a>
-    <a mat-list-item [routerLink]="['/docentes']" routerLinkActive="router-link-active" >Docentes</a>
-    <a mat-list-item [routerLink]="['/alumnos']" routerLinkActive="router-link-active" >Usuarios</a>
-    <a mat-list-item [routerLink]="['/pagos']" routerLinkActive="router-link-active" >Pagos</a>
-    <mat-accordion>
+    <a *ngIf="admin" mat-list-item [routerLink]="['/inscripciones']" routerLinkActive="router-link-active" >Inscripciones</a>
+    <a *ngIf="admin || instructor" mat-list-item [routerLink]="['/productos']" routerLinkActive="router-link-active" >Cursos</a>
+    <a *ngIf="admin" mat-list-item [routerLink]="['/categorias']" routerLinkActive="router-link-active" >Categorias</a>
+    <a *ngIf="admin" mat-list-item [routerLink]="['/docentes']" routerLinkActive="router-link-active" >Docentes</a>
+    <a *ngIf="admin" mat-list-item [routerLink]="['/alumnos']" routerLinkActive="router-link-active" >Usuarios</a>
+    <a *ngIf="admin" mat-list-item [routerLink]="['/pagos']" routerLinkActive="router-link-active" >Pagos</a>
+    <mat-accordion *ngIf="admin">
         <mat-expansion-panel >
             <mat-expansion-panel-header>
                 <mat-panel-title>

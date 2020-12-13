@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   API: "http://on_api_v1.test/api/",
+  APIAuth: "http://on_api_v1.test/api/auth/",
 
 
   ////ROUTES API

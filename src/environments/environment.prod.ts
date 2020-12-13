@@ -2,7 +2,7 @@ export const environment = {
   production: true,
 
   API: "https://api.on.picaworks.com/api/",
-  AuthAPI: 'https://api.on.picaworks.com/api/auth/',
+  APIAuth: "http://api.on.picaworks.com/api/auth/",
 
 
   ////ROUTES API
@@ -28,7 +28,8 @@ export const environment = {
     lessons: "lessons",
     schedules: "schedules",
     users: "users",
-    orders: "orders"
+    orders: "orders",
+    enrollments:"enrollments"
 
   }
   

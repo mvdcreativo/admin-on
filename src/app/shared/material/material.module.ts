@@ -56,8 +56,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
   declarations: [],
   imports: [
     CommonModule,
-    ColorPickerModule
-    
+    ColorPickerModule,
   ],
   exports: [
     LayoutModule,
@@ -88,7 +87,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
     MatExpansionModule,
     ColorPickerModule,
     MatChipsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatMenuModule
   ],
 
 })

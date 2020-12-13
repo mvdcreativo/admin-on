@@ -154,7 +154,7 @@ export class ProductService {
 
     }).pipe(map(
       res => {
-        console.log(res);
+        // console.log(res);
         
         this.setProductOnEdit(null)
         this.setItems(res)

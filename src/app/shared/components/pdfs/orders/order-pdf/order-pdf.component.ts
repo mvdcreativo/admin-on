@@ -7,7 +7,6 @@ import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { Ul,Item, Txt } from 'pdfmake-wrapper';
 import moment from 'moment';
-import 'moment/min/locales';
 
 
 @Component({

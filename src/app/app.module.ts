@@ -12,6 +12,8 @@ import { AppComponent } from './app.component';
 import { PagesComponent } from './pages/pages.component';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { indexAuthInterceptor } from './auth/helpers/index-auth.interceptor';
+
 
 
 @NgModule({
@@ -29,6 +31,7 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
     
   ],
   providers: [
+    indexAuthInterceptor,
     {provide: MAT_DATE_LOCALE, useValue: 'es-UY'},
   ],
   bootstrap: [AppComponent]

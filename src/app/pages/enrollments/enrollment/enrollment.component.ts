@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable, Subscription, of } from 'rxjs';
+import { Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../../accounts/interfaces/account';
 import { UsersService } from '../../edit-user/services/users.service';
@@ -13,9 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { PaymentsService } from '../../payments/services/payments.service';
 import { DataPersonPaymentComponent } from '../../payments/components/data-person-payment/data-person-payment.component';
 import { DialogCuposComponent } from '../../payments/components/dialog-cupos/dialog-cupos.component';
-import { get } from 'scriptjs'; 
+// import { get } from 'scriptjs';
 import { PdfService } from "src/app/shared/components/pdfs/services/pdf.service";
-import { OrderPdfComponent } from 'src/app/shared/components/pdfs/orders/order-pdf/order-pdf.component';
 import { Order } from '../../payments/interfaces/order';
 
 @Component({
@@ -53,9 +52,9 @@ export class EnrollmentComponent implements OnInit {
 
   ngOnInit(): void {
     
-    get("https://www.mercadopago.com.uy/integrations/v1/web-payment-checkout.js", () => {
-      //library has been loaded...
-    });
+    // get("https://www.mercadopago.com.uy/integrations/v1/web-payment-checkout.js", () => {
+    //   //library has been loaded...
+    // });
     this.activateRoute.paramMap.subscribe(
       (params:Params) => {
         console.log(params);
