@@ -126,7 +126,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
         { nameControl: 'n_identification', type: 'text', value: this.userEdit?.account.n_identification, label: 'Nº funcionario', validators: [Validators.required] },
         { nameControl: 'phone_two', type: 'text', value: this.userEdit?.account.phone_two, label: 'Celular', validators: [Validators.required] },
         { nameControl: 'phone_one', type: 'text', value: this.userEdit?.account.phone_one, label: 'Teléfono' },
-        { nameControl: 'role_id', type: 'select', value: 1, label: 'Rol en Sistema', options: this.optionsRoles , validators: [Validators.required]},
+        { nameControl: 'role_id', type: 'select', value: this.userEdit?.account.role_id, label: 'Rol en Sistema', options: this.optionsRoles , validators: [Validators.required]},
         { nameControl: 'bio', type: 'textarea', value: this.userEdit?.account.bio, label: 'Descripción / Bio', validators: [Validators.required] },
         { nameControl: 'address_one', type: 'text', value: this.userEdit?.account.address_one, label: 'Dirección',class:'mvd-col1--1' },
 
@@ -148,7 +148,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
         // { nameControl: 'n_identification', type: 'text', value: this.userEdit?.account.n_identification, label: 'Nº funcionario', validators: [Validators.required] },
         { nameControl: 'phone_two', type: 'text', value: this.userEdit?.account.phone_two, label: 'Celular', validators: [Validators.required] },
         { nameControl: 'phone_one', type: 'text', value: this.userEdit?.account.phone_one, label: 'Teléfono' },
-        { nameControl: 'role_id', type: 'select', value: 2, label: 'Rol en Sistema', options: this.optionsRoles , validators: [Validators.required]},
+        { nameControl: 'role_id', type: 'select', value: this.userEdit?.account.role_id, label: 'Rol en Sistema', options: this.optionsRoles , validators: [Validators.required]},
         { nameControl: 'address_one', type: 'text', value: this.userEdit?.account.address_one, label: 'Dirección', class:'mvd-col1--1' },
         // { nameControl: 'bio', type: 'textarea', value: this.userEdit?.account.bio, label: 'Descripción', validators: [Validators.required] },
       ]     
