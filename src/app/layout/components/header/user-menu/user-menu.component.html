@@ -15,7 +15,7 @@
     <!-- <span><mat-icon class="material-icons-round" >engineering</mat-icon></span> -->
     <mat-menu class="desplegable" [overlapTrigger]="false" #menu="matMenu">
         <span (mouseleave)="menuTrigger.closeMenu()">
-            <a mat-menu-item [routerLink]="[ '/' ]" >
+            <a mat-menu-item [routerLink]="[ '/alumnos/editar-usuario', (currentUser |async)?.id ]" >
                 <mat-icon>person_pin</mat-icon>
                 <span>Perfil</span>
             </a>
