@@ -27,7 +27,7 @@ export class AdministradorGuard implements CanActivate {
         console.log('Logged');
         return true;
       }else{
-        this.authService.errorSubject.next("El usuario no cuenta con los privilegios necesarios")
+        // this.authService.errorSubject.next("El usuario no cuenta con los privilegios necesarios")
       }
       // return false
       // if(this.authService.currentUser.value)
