@@ -35,7 +35,7 @@
 
         </ng-container>
 
-        <ng-container *ngIf="field.type === 'textarea'">
+        <!-- <ng-container *ngIf="field.type === 'textarea'">
 
             <mat-form-field class="mvd-col1--1" appearance="outline">
                 <mat-label>{{ field.label }}</mat-label>
@@ -43,7 +43,7 @@
                     [placeholder]="field.label"></textarea>
             </mat-form-field>
 
-        </ng-container>
+        </ng-container> -->
 
         <ng-container *ngIf="field.type === 'number'">
 
@@ -78,6 +78,17 @@
                 </button>
             </div>
         </ng-container>
+
+        <ng-container *ngIf="field.type === 'textarea'">
+            <quill-editor theme="snow"
+                [placeholder]="field.label"
+                [modules]="configEditor.modules"  
+                style="min-height: 100px" 
+                [formControlName]="field.nameControl" 
+                class="mvd-col1--1">
+            </quill-editor>
+        </ng-container>
+        
 
 
 

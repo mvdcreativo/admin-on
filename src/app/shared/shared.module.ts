@@ -19,6 +19,7 @@ import { ProductsModule } from '../pages/products/products.module';
 import { ProductComponent } from '../pages/products/product/product.component';
 import { InputAutocompleteComponent } from './components/forms/input-autocomplete/input-autocomplete.component';
 import { OrderPdfComponent } from './components/pdfs/orders/order-pdf/order-pdf.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { OrderPdfComponent } from './components/pdfs/orders/order-pdf/order-pdf.
     ReactiveFormsModule,
     FormsModule,
     PipesModule,
+    QuillModule.forRoot()
   ],
   exports: [
     MaterialModule,
@@ -55,7 +57,8 @@ import { OrderPdfComponent } from './components/pdfs/orders/order-pdf/order-pdf.
     DinamicFormComponent,
     FormLocationsComponent,
     InputAutocompleteComponent,
-    OrderPdfComponent
+    OrderPdfComponent,
+    
   ]
 })
 export class SharedModule { }
