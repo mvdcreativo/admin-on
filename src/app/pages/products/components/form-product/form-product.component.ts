@@ -182,7 +182,7 @@ export class FormProductComponent implements OnInit, OnDestroy {
 
   selectInstructor(e){
     this.imgInstructor = e.value?.image ?? null
-    this.form.get('user_instructor_id').patchValue(e.value?.user_id ?? null) 
+    this.form.get('user_instructor_id').patchValue(e.value?.id ?? null) 
     // console.log(this.form.value);
     
     
@@ -203,12 +203,12 @@ export class FormProductComponent implements OnInit, OnDestroy {
     this.form.controls['neighborhood_id'].setValue(null, { emitEvent: false });
 
   }
-  public onSelectMunicipality() {
-    this.form.controls['neighborhood_id'].setValue(null, { emitEvent: false });
-  }
-  public onSelectNeighborhood() {
-    // this.form.controls['street'].setValue(null, {emitEvent: false});
-  }
+  // public onSelectMunicipality() {
+  //   this.form.controls['neighborhood_id'].setValue(null, { emitEvent: false });
+  // }
+  // public onSelectNeighborhood() {
+  //   // this.form.controls['street'].setValue(null, {emitEvent: false});
+  // }
 
   onSubmit(){
     
