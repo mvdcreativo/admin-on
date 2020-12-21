@@ -144,6 +144,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 ngx-color-picker
 MIT
 
+ngx-custom-validators
+MIT
+
 ngx-quill
 MIT
 
