@@ -8,13 +8,16 @@
                 </div>
             </label>
             <input id="file" hidden type="file" (change)="uploadImage($event)">
-            <span style="color:red;" *ngIf="messageUpload">{{messageUpload}}</span>
+            <mat-error *ngIf="messageUpload">{{messageUpload}}</mat-error>
+            <mat-error *ngIf="form.controls['image'].errors?.required">{{getErrorMessage('required')}}</mat-error>
         </div>
+
     </div>
 
     <mat-form-field class="mvd-col1-3" appearance="outline">
         <mat-label>Título del Curso</mat-label>
         <input formControlName="title" matInput placeholder="Titulo descriptivo" autocomplete="off">
+        <mat-error *ngIf="form.controls['title'].errors?.required">{{getErrorMessage('required')}}</mat-error>
     </mat-form-field>
 
     <div class="mvd-col3-5 content-instructor">
@@ -34,6 +37,7 @@
                     {{ instructor.name }} {{ instructor.last_name }}
                 </mat-option>
             </mat-select>
+            <mat-error *ngIf="form.controls['user_instructor'].errors?.required">{{getErrorMessage('required')}}</mat-error>
         </mat-form-field>
     </div>
 
@@ -47,6 +51,8 @@
             (click)="picker.open()">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker startView="year"></mat-datepicker>
+        <mat-error *ngIf="form.controls['date_ini'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+        <mat-error *ngIf="form.controls['date_ini'].errors?.date">{{getErrorMessage('date')}}</mat-error>
     </mat-form-field>
 
 
@@ -67,12 +73,16 @@
             <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
 
         </mat-select>
+        <mat-error *ngIf="form.controls['categories'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+
     </mat-form-field>
 
 
     <mat-form-field class="" appearance="outline">
         <mat-label>Cupos</mat-label>
         <input formControlName="cupos" type="number" matInput placeholder="Cupos" autocomplete="off">
+        <mat-error *ngIf="form.controls['cupos'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+        <mat-error *ngIf="form.controls['cupos'].errors?.number">{{getErrorMessage('number')}}</mat-error>
     </mat-form-field>
 
     <div class="field-doble">
@@ -82,16 +92,20 @@
                 <mat-option *ngFor="let lengthUnit of lengthUnits | async" [value]="lengthUnit.id">{{ lengthUnit.name }}
                 </mat-option>
             </mat-select>
+            <mat-error *ngIf="form.controls['length_unit_id'].errors?.required">{{getErrorMessage('required')}}</mat-error>
         </mat-form-field>
         <mat-form-field class="" appearance="outline">
             <mat-label>Duración</mat-label>
             <input formControlName="length" type="number" matInput placeholder="Duracion" autocomplete="off">
+            <mat-error *ngIf="form.controls['length'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+            <mat-error *ngIf="form.controls['length'].errors?.number">{{getErrorMessage('number')}}</mat-error>
         </mat-form-field>
     </div>
 
     <mat-form-field class="" appearance="outline">
         <mat-label>Carga Horaria</mat-label>
         <input formControlName="effort" type="text" matInput placeholder="Horas por semana" autocomplete="off">
+        <mat-error *ngIf="form.controls['effort'].errors?.required">{{getErrorMessage('required')}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -99,6 +113,7 @@
         <mat-select formControlName="level_id">
             <mat-option *ngFor="let level of levels|async" [value]="level.id">{{ level.name }}</mat-option>
         </mat-select>
+        <mat-error *ngIf="form.controls['level_id'].errors?.required">{{getErrorMessage('required')}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -107,11 +122,13 @@
             <mat-option value="Si">SI</mat-option>
             <mat-option value="No">NO</mat-option>
         </mat-select>
+        <mat-error *ngIf="form.controls['certificate'].errors?.required">{{getErrorMessage('required')}}</mat-error>
     </mat-form-field>
     <mat-form-field class="" appearance="outline">
         <mat-label>Nombre del Certificado</mat-label>
         <input formControlName="title_certificate" type="text" matInput placeholder="Nombre del Certificado"
             autocomplete="off">
+        <mat-error *ngIf="form.controls['title_certificate'].errors?.required">{{getErrorMessage('required')}}</mat-error>
     </mat-form-field>
 
     <div class="field-doble mvd-col1-2">
@@ -121,10 +138,12 @@
                 <mat-option *ngFor="let currency of currencies | async" [value]="currency.id">{{ currency.symbol }}
                 </mat-option>
             </mat-select>
+        <mat-error *ngIf="form.controls['currency_id'].errors?.required">{{getErrorMessage('required')}}</mat-error>
         </mat-form-field>
         <mat-form-field class="" appearance="outline">
             <mat-label>Precio</mat-label>
             <input formControlName="price" type="number" matInput placeholder="Precio" autocomplete="off">
+            <mat-error *ngIf="form.controls['price'].errors?.required">{{getErrorMessage('required')}}</mat-error>
         </mat-form-field>
     </div>
 
@@ -133,17 +152,20 @@
         <mat-select formControlName="status_id">
             <mat-option *ngFor="let status of statuses|async" [value]="status.id">{{ status.name }}</mat-option>
         </mat-select>
+        <mat-error *ngIf="form.controls['status_id'].errors?.required">{{getErrorMessage('required')}}</mat-error>
     </mat-form-field>
 
 
     <mat-form-field class="mvd-col1--1" appearance="outline">
         <mat-label>Requisitos</mat-label>
         <textarea style="min-height: 100px" formControlName="requirements" matInput></textarea>
+        <mat-error *ngIf="form.controls['requirements'].errors?.required">{{getErrorMessage('required')}}</mat-error>
     </mat-form-field>
 
     <mat-form-field class="mvd-col1--1" appearance="outline">
         <mat-label>Descripción</mat-label>
         <textarea style="min-height: 200px" formControlName="description" matInput></textarea>
+        <mat-error *ngIf="form.controls['description'].errors?.required">{{getErrorMessage('required')}}</mat-error>
     </mat-form-field>
 
 

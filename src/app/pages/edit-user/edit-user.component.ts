@@ -11,6 +11,8 @@ import { FormGroup, Validators } from "@angular/forms";
 import {default as _rollupMoment} from 'moment';
 import { RoleService } from 'src/app/shared/services/roles/role.service';
 import { OptionSelect } from 'src/app/shared/components/dinamic-form/interfaces/fields';
+
+import { CustomValidators } from 'ngx-custom-validators';
 const moment = _rollupMoment;
 
 @Component({
@@ -31,6 +33,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
   typesDocIden: { name: string; value: string; }[];
   dataLocation: { typeLocation: string; elementEdit: { city: string; city_id: number; code: string; neighborhood_id: number; name: string; state_id: number; }; };
   returUrl: string = "";
+  emailsExists: any[] = [];
 
   constructor(
     private activateRouter: ActivatedRoute,
@@ -38,7 +41,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
     private userService: UsersService,
     private roleService: RoleService,
 
-  ) { }
+  ) { 
+    
+  }
 
   ngOnInit(): void {
 
@@ -78,7 +83,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
       this.roleService.getRoles().subscribe(
         res=> {
           this.optionsRoles = res.map(v=> {return {name : v.name, value: v.id}})        
-          this.fields = this.setFields()
+          this.emailExistValidation()
         }
       )
     )
@@ -105,6 +110,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
   }
   setFields() {
     // console.log(elementEdit);
+    
     this.setDataLocation()
 
     this.typesDocIden = [
@@ -118,12 +124,12 @@ export class EditUserComponent implements OnInit, OnDestroy {
         { nameControl: 'image', type: 'image', value: this.userEdit?.account.image, label: 'Imagen' },
         { nameControl: 'name', type: 'text', value: this.userEdit?.name, label: 'Nombre', validators: [Validators.required] },
         { nameControl: 'last_name', type: 'text', value: this.userEdit?.last_name, label: 'Apellido', validators: [Validators.required] },
-        { nameControl: 'type_doc_iden', type: 'select', value: this.userEdit?.account.type_doc_iden, label: 'Tipo documento de identidad',options: this.typesDocIden , validators: [Validators.required] },
-        { nameControl: 'n_doc_iden', type: 'text', value: this.userEdit?.account.n_doc_iden, label: 'Nº documento', validators: [Validators.required] },
-        { nameControl: 'email', type: 'text', value: this.userEdit?.email, label: 'Email', validators: [Validators.required] },
-        { nameControl: 'birth', type: 'date', value:  moment(this.userEdit?.account.birth).format('YYYY-MM-DD HH:mm:ss'), label: 'Fecha de nacimiento' },
+        { nameControl: 'type_doc_iden', type: 'select', value: this.userEdit?.account.type_doc_iden || "CI", label: 'Tipo documento de identidad',options: this.typesDocIden , validators: [Validators.required] },
+        { nameControl: 'n_doc_iden', type: 'text', value: this.userEdit?.account.n_doc_iden, label: 'Nº documento', validators: [Validators.required, CustomValidators.number] },
+        { nameControl: 'email', type: 'text', value: this.userEdit?.email, label: 'Email', validators: [Validators.required,CustomValidators.email, CustomValidators.notIncludedIn(this.emailsExists)] },
+        { nameControl: 'birth', type: 'date', value:  moment(this.userEdit?.account.birth).format('YYYY-MM-DD HH:mm:ss'), label: 'Fecha de nacimiento',validators: [CustomValidators.date] },
         { nameControl: 'certificated', type: 'text', value: this.userEdit?.account.certificated, label: 'Profesión/es / Títulos', validators: [Validators.required] },
-        { nameControl: 'n_identification', type: 'text', value: this.userEdit?.account.n_identification, label: 'Nº funcionario', validators: [Validators.required] },
+        { nameControl: 'n_identification', type: 'text', value: this.userEdit?.account.n_identification, label: 'Nº funcionario' },
         { nameControl: 'phone_two', type: 'text', value: this.userEdit?.account.phone_two, label: 'Celular', validators: [Validators.required] },
         { nameControl: 'phone_one', type: 'text', value: this.userEdit?.account.phone_one, label: 'Teléfono' },
         { nameControl: 'role_id', type: 'select', value: this.userEdit?.account.role_id, label: 'Rol en Sistema', options: this.optionsRoles , validators: [Validators.required]},
@@ -134,16 +140,17 @@ export class EditUserComponent implements OnInit, OnDestroy {
       return fields
 
     } else {
+      
       const fields = [
         { nameControl: 'id', type: 'hidden', value: this.userEdit?.id, label: 'Id' },
         // { nameControl: 'password', type: 'hidden', value: 'secret', label: 'Id' },
         { nameControl: 'image', type: 'image', value: this.userEdit?.account.image, label: 'Imagen' },
         { nameControl: 'name', type: 'text', value: this.userEdit?.name, label: 'Nombre', validators: [Validators.required] },
         { nameControl: 'last_name', type: 'text', value: this.userEdit?.last_name, label: 'Apellido', validators: [Validators.required] },
-        { nameControl: 'type_doc_iden', type: 'select', value: this.userEdit?.account.type_doc_iden, label: 'Tipo documento de identidad',options: this.typesDocIden , validators: [Validators.required] },
-        { nameControl: 'n_doc_iden', type: 'text', value: this.userEdit?.account.n_doc_iden, label: 'Nº documento', validators: [Validators.required] },
-        { nameControl: 'email', type: 'text', value: this.userEdit?.email, label: 'Email', validators: [Validators.required] },
-        { nameControl: 'birth', type: 'date', value:  moment(this.userEdit?.account.birth).format('YYYY-MM-DD HH:mm:ss'), label: 'Fecha de nacimiento' },
+        { nameControl: 'type_doc_iden', type: 'select', value: this.userEdit?.account.type_doc_iden || "CI", label: 'Tipo documento de identidad',options: this.typesDocIden , validators: [Validators.required] },
+        { nameControl: 'n_doc_iden', type: 'text', value: this.userEdit?.account.n_doc_iden, label: 'Nº documento', validators: [Validators.required, CustomValidators.number] },
+        { nameControl: 'email', type: 'text', value: this.userEdit?.email, label: 'Email', validators: [Validators.required,CustomValidators.email, CustomValidators.notIncludedIn(this.emailsExists)] },
+        { nameControl: 'birth', type: 'date', value:  moment(this.userEdit?.account.birth).format('YYYY-MM-DD HH:mm:ss'), label: 'Fecha de nacimiento',validators: [CustomValidators.date] },
         // { nameControl: 'certificated', type: 'text', value: this.userEdit?.account.certificated, label: 'Profesión/es / Títulos', validators: [Validators.required] },
         // { nameControl: 'n_identification', type: 'text', value: this.userEdit?.account.n_identification, label: 'Nº funcionario', validators: [Validators.required] },
         { nameControl: 'phone_two', type: 'text', value: this.userEdit?.account.phone_two, label: 'Celular', validators: [Validators.required] },
@@ -190,5 +197,23 @@ export class EditUserComponent implements OnInit, OnDestroy {
         this.router.navigate([`/${this.urlRequest[1]}`])        
       }
     )
+  }
+
+
+  emailExistValidation():void{
+    
+    this.userService.getUsers(1,10000).pipe(map(v=>v.data.data.map(x=> x.email))).subscribe(res=>{
+      if(this.userEdit?.email){
+        console.log(this.userEdit?.email);
+        
+        this.emailsExists = res.filter( x => x !== this.userEdit.email)
+      }else{
+        this.emailsExists = res
+      }
+      console.log(this.emailsExists);
+      
+      this.fields = this.setFields()
+    } )
+    
   }
 }

@@ -67,6 +67,7 @@ export class ProductService {
     )
 
   }
+  
   duplicateProduct(id): Observable<Product>{
     const formData = new FormData();
     formData.append('id',id)

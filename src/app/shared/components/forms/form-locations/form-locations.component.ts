@@ -81,7 +81,7 @@ export class FormLocationsComponent implements OnInit {
       {
         country_id: 1,
         name:  [dataEdit?.name, Validators.required],
-        code:  [dataEdit?.code, Validators.required],
+        code:  [dataEdit?.code],
         neighborhood_id:  [dataEdit?.neighborhood_id, Validators.required] ,
 
         city_id: [dataEdit?.city_id],

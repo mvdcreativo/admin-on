@@ -120,4 +120,10 @@ export class UsersService {
     this.openSnackBar(error.message || "error en la solicitud.", 'error-snack-bar')
     return Observable.throw(error.message || "error en la solicitud.");
   }
+
+  checkEmailExist(email):User{
+    let user
+    this.http.get<User>(`${environment.API}/${email}`).subscribe(res => user = res)
+    return user
+  }
 }

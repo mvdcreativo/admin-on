@@ -20,6 +20,7 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAda
 import { CategoriesService } from 'src/app/pages/categories/services/categories.service';
 import { filter, map } from 'rxjs/operators';
 import { Instructor } from 'src/app/pages/instructors/interfaces/instructor';
+import { CustomValidators } from 'ngx-custom-validators';
 
 const moment = _rollupMoment;
 
@@ -101,13 +102,13 @@ export class FormProductComponent implements OnInit, OnDestroy {
     this.form = this.fb.group(
       {
         title:[this.productEdit?.title, Validators.required],
-        cupos:[this.productEdit?.cupos],
-        image:[this.productEdit?.image],
-        length:[this.productEdit?.length, Validators.required],
+        cupos:[this.productEdit?.cupos, [Validators.required, CustomValidators.number]],
+        image:[this.productEdit?.image || null, Validators.required,],
+        length:[this.productEdit?.length,[Validators.required,CustomValidators.number]],
         length_unit_id:[this.productEdit?.length_unit_id, Validators.required],
         effort:[this.productEdit?.effort, Validators.required],
         level_id:[this.productEdit?.level_id, Validators.required],
-        user_instructor:[this.productEdit?.user_instructor],
+        user_instructor:[this.productEdit?.user_instructor , Validators.required],
         user_instructor_id:[this.productEdit?.user_instructor_id, Validators.required],
         certificate:[this.productEdit?.certificate, Validators.required],
         // discount_uno:[this.productEdit?.discount_uno, Validators.required],
@@ -117,8 +118,8 @@ export class FormProductComponent implements OnInit, OnDestroy {
         description:[this.productEdit?.description, Validators.required],
         requirements:[this.productEdit?.requirements, Validators.required],
         price:[this.productEdit?.price, Validators.required],
-        currency_id:[this.productEdit?.currency_id, Validators.required],
-        date_ini:[moment(this.productEdit?.date_ini).format('YYYY-MM-DD HH:mm:ss'), Validators.required],
+        currency_id:[this.productEdit?.currency_id || "UYU", Validators.required],
+        date_ini:[moment(this.productEdit?.date_ini).format('YYYY-MM-DD HH:mm:ss'), [Validators.required,  CustomValidators.date]],
         status_id:[this.productEdit?.status_id, Validators.required],
         categories:[null, Validators.required]
       }
@@ -285,5 +286,35 @@ export class FormProductComponent implements OnInit, OnDestroy {
     }
   }
 
+  getErrorMessage(validator){
+    let message
+    switch (validator) {
+      case 'notIncludedIn':{
+        message = "El email ya existe"
+        break;
+      }
+      case 'email':{
+        message = "Email no válido"
+        break;
+      }      
+      case 'date':{
+        message = "Formato de fecha inválido"
+        break;
+      }      
+      case 'number':{
+        message = "Solo números"
+        break;
+      }      
+      case 'required':{
+        message = "Campo requerido"
+        break;
+      }  
+    
+      default:
+        message = "No válido"
+        break;
+    }
 
+    return message
+  }
 }

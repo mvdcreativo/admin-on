@@ -231,4 +231,37 @@ export class DinamicFormComponent implements OnInit {
   }
 
 
+
+
+  getErrorMessage(validator){
+    let message
+    switch (validator) {
+      case 'notIncludedIn':{
+        message = "El email ya existe"
+        break;
+      }
+      case 'email':{
+        message = "Email no válido"
+        break;
+      }      
+      case 'date':{
+        message = "Formato de fecha inválido"
+        break;
+      }      
+      case 'number':{
+        message = "Solo números"
+        break;
+      }      
+      case 'required':{
+        message = "Campo requerido"
+        break;
+      }  
+    
+      default:
+        message = "No válido"
+        break;
+    }
+
+    return message
+  }
 }

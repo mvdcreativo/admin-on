@@ -7,7 +7,13 @@
                 <mat-label>{{ field.label }}</mat-label>
                 <input [formControlName]="field.nameControl" matInput [placeholder]="field.label" [type]="field.type"
                     autocomplete="off">
-            </mat-form-field>
+                    <mat-error *ngIf="form.controls[field.nameControl].errors?.notIncludedIn">{{getErrorMessage('notIncludedIn')}}</mat-error>
+                    <mat-error *ngIf="form.controls[field.nameControl].errors?.email">{{getErrorMessage('email')}}</mat-error>
+                    <mat-error *ngIf="form.controls[field.nameControl].errors?.required">{{getErrorMessage('required')}}</mat-error>
+                    <mat-error *ngIf="form.controls[field.nameControl].errors?.date">{{getErrorMessage('date')}}</mat-error>
+                    <mat-error *ngIf="form.controls[field.nameControl].errors?.number">{{getErrorMessage('number')}}</mat-error>
+
+                </mat-form-field>
 
         </ng-container>
 
@@ -31,6 +37,8 @@
                     [matDatepicker]="picker" autocomplete="off" (click)="picker.open()">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker startView="year"></mat-datepicker>
+                <mat-error *ngIf="form.controls[field.nameControl].errors?.date">{{getErrorMessage('date')}}</mat-error>
+
             </mat-form-field>
 
         </ng-container>
@@ -51,6 +59,8 @@
                 <mat-label>{{ field.label }}</mat-label>
                 <input type="number" [formControlName]="field.nameControl" matInput [placeholder]="field.label"
                     autocomplete="off">
+                <mat-error *ngIf="form.controls[field.nameControl].errors?.number">{{getErrorMessage('number')}}</mat-error>
+
             </mat-form-field>
 
         </ng-container>
