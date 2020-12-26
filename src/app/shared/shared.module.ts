@@ -21,6 +21,7 @@ import { InputAutocompleteComponent } from './components/forms/input-autocomplet
 import { OrderPdfComponent } from './components/pdfs/orders/order-pdf/order-pdf.component';
 import { QuillModule } from 'ngx-quill';
 
+
 @NgModule({
   declarations: [
     DataTableComponent,
@@ -43,7 +44,7 @@ import { QuillModule } from 'ngx-quill';
     ReactiveFormsModule,
     FormsModule,
     PipesModule,
-    QuillModule.forRoot()
+    QuillModule.forRoot(),
   ],
   exports: [
     MaterialModule,
@@ -58,7 +59,7 @@ import { QuillModule } from 'ngx-quill';
     FormLocationsComponent,
     InputAutocompleteComponent,
     OrderPdfComponent,
-    
+
   ]
 })
 export class SharedModule { }

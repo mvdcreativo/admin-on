@@ -6,17 +6,15 @@
             <div class="price" *ngIf="course | async as course ; else loading">
                 <h1>{{ course.currency.symbol }} {{ course.price | number }}</h1>
             </div>
-            <button *ngIf="user && !view && (course | async) as course" class="confirm-btn animate__animated animate__fadeInRight" (click)="pay(course)" mat-flat-button color="primary" >Confirmar</button>
+            <button *ngIf="user && !view &&  form?.valid && (course | async) as course" class="confirm-btn animate__animated animate__fadeInRight" (click)="pay(course)" mat-flat-button color="primary" >Confirmar</button>
             <button *ngIf="order|async" (click)="pdf()" class="confirm-btn animate__animated animate__fadeInRight" mat-flat-button color="primary" ><mat-icon>print</mat-icon>Imprimir</button>
         </div>
 
 
     </mat-card-header>
     <ng-container >
-        
             <div class="data-user">
-                <h2 class="">Usuario</h2>
-                
+                <h2 class="">Alumno</h2>
                 <div class="content-search" *ngIf="!view">
                     <div [ngClass]="searched ? 'search': 'none'">
                         <mvd-input-autocomplete 
@@ -41,15 +39,68 @@
                 <div  *ngIf="user" class="selct-user animate__animated animate__fadeInTop">
                     <img [src]="user.account.image || '../../../../assets/images/no-image.svg'" alt="">
                     <ul  class="animate__animated animate__fadeInTop animate__zoomIn">
+                        <li class="btn-edit">
+                            <button mat-flat-button (click)="editUser()" color="primary">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </li>
                         <li><span>Nombre y Apellido:</span> {{ user.name }} {{ user.last_name }}</li>
-                        <li><span>Documento:</span> {{ user.account.n_doc_iden }}</li>
+                        <li><span>Documento:</span> {{ user.account?.n_doc_iden }}</li>
                         <li><span>Email:</span>{{ user.email }}</li>
-                        <li><span>Teléfonos:</span>  {{ user.account.phone_one }} {{ user.account.phone_two }} </li>
-                        <li><span>Dirección:</span> {{ user.account.address_one }} - {{ user.account.neighborhood.name }} - {{ user.account.neighborhood.city.name }} </li>
+                        <li><span>Teléfonos:</span>  {{ user.account?.phone_one }} {{ user.account?.phone_two }} </li>
+                        <li><span>Dirección:</span> {{ user.account?.address_one }} - {{ user.account?.neighborhood?.name }} - {{ user.account?.neighborhood?.city.name }} </li>
                     </ul>
                 </div>
 
             </div>
+            <div class="data-responsable">
+                <h2 class="">Responsable Legal</h2>
+                <mat-hint style="padding-left: 1rem;">Es el responsable de el/los pagos</mat-hint>
+                <div class="content-responsable" *ngIf="user">
+                    <form [formGroup]="form" *ngIf="user" >
+                        <mat-form-field class="" appearance="outline">
+                            <mat-label>Nombre</mat-label>
+                            <input formControlName="name" type="text" matInput placeholder="Nombre" autocomplete="off">
+                            <mat-error *ngIf="form.controls['name'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="" appearance="outline">
+                            <mat-label>Apellido</mat-label>
+                            <input formControlName="last_name" type="text" matInput placeholder="Apellido" autocomplete="off">
+                            <mat-error *ngIf="form.controls['last_name'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Tipo de documento</mat-label>
+                            <mat-select formControlName="type_doc_iden">
+                                <mat-option value="CI">CI</mat-option>
+                                <mat-option value="Pasaporte">Pasaporte</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="form.controls['type_doc_iden'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="" appearance="outline">
+                            <mat-label>Nº documento</mat-label>
+                            <input formControlName="n_doc_iden" type="text" matInput placeholder="Documento de identidad" autocomplete="off">
+                            <mat-error *ngIf="form.controls['n_doc_iden'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="" appearance="outline">
+                            <mat-label>Teléfono/Móvil</mat-label>
+                            <input formControlName="phone_one" type="text" matInput placeholder="Nº de Teléfono o Móvil" autocomplete="off">
+                            <mat-error *ngIf="form.controls['phone_one'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="mvd-col1--1" appearance="outline">
+                            <mat-label>Correo Electrónico</mat-label>
+                            <input formControlName="email" type="text" matInput placeholder="Correo Electrónico" autocomplete="off">
+                            <mat-error *ngIf="form.controls['email'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+                            <mat-error *ngIf="form.controls['email'].errors?.email">{{getErrorMessage('email')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="mvd-col1--1" appearance="outline">
+                            <mat-label>Dirección</mat-label>
+                            <input formControlName="address_one" type="text" matInput placeholder="Dirección" autocomplete="off">
+                            <mat-error *ngIf="form.controls['address_one'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+                        </mat-form-field>
+                    </form>
+                </div>
+
+            </div>            
             <div class="data-product">
                 <h2>Curso</h2>
                 <div  *ngIf="course |async as course; else loading" class="selct-course">
@@ -87,5 +138,5 @@
 </mat-card>
 
 <ng-container *ngIf="print && dataPrint" >
-    <mvd-order-pdf [dataPrint]="dataPrint" style="display: none;"></mvd-order-pdf>
+        <mvd-order-pdf [dataPrint]="dataPrint"></mvd-order-pdf>
 </ng-container>

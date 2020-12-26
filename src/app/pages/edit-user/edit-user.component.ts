@@ -194,7 +194,12 @@ export class EditUserComponent implements OnInit, OnDestroy {
   updateUser(data){
     this.userService.updateUser(data).pipe(take(1)).subscribe(
       res=> {
-        this.router.navigate([`/${this.urlRequest[1]}`])        
+        if (this.returUrl) {
+          this.router.navigate([`/${this.returUrl}`, res.id])
+
+        }else{
+          this.router.navigate([`/${this.urlRequest[1]}`])   
+        }     
       }
     )
   }

@@ -1,0 +1,95 @@
+
+.container{
+    --color-primary: rgb(67,160,71,1);
+    --color-light: rgb(67,160,71,0.5);
+
+    width: 842px ;
+
+    // padding-bottom: -80px;
+    // max-width: 210mm;
+    height: auto;
+    box-sizing: border-box!important;
+    // max-height: 297mm;
+    // background-color: rgb(221, 251, 255);
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: max-content;
+    align-items: center;
+    h1{
+        grid-column: 1/13;
+        font-size: 14px;
+        line-height: 2;
+        background-color: var(--color-light);
+        padding-left: 1rem;
+        box-sizing: border-box;
+        margin-top: 1rem;
+        margin-bottom: 0.7rem;
+    }
+    
+    .text-contrato{
+        padding:15px 10px ;
+        grid-template-columns: 1fr;
+        p{
+            width: 100%;
+            text-align: justify;
+        }
+        .content-firmas{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+
+        }
+    }
+    .obs{
+        margin: 2rem 0;
+        display: grid;
+        grid-template-columns: 1fr 10fr;
+        position: relative;
+        width: 100%;
+        float: left;
+        
+        .punteado{
+            // display: block;
+            width: 100%;
+            min-width: 650px;
+            height: 20px;
+            border-bottom: 1px dotted var(--color-primary);
+            border-bottom-style: dotted;
+        }
+    }
+    
+}
+.row{
+    width: 100%;
+    align-items: center;
+    align-content: center;
+    box-sizing: border-box;
+    font-size: 12px;
+    grid-column: 1/13;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    border: 1px solid var(--color-primary);
+    // border-bottom: none;
+    background-color: white;
+    margin-top: -1px;
+    line-height: 2;
+    .title{
+        width: 100%;
+        box-sizing: border-box;
+        background-color: var(--color-light) ;
+        min-width: 100px;
+        padding-left: 3px;
+        text-transform: uppercase;
+    }
+    .text{
+        width: 100%;
+        box-sizing: border-box;
+        padding-left: 3px;
+    }
+
+}
+.firmas{
+    margin-top: 3rem;
+    border-top: 1px dashed var(--color-primary); 
+    width: 90%;
+    text-align: center;
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { PaymentsService } from '../../payments/services/payments.service';
 import { DataPersonPaymentComponent } from '../../payments/components/data-person-payment/data-person-payment.component';
 import { DialogCuposComponent } from '../../payments/components/dialog-cupos/dialog-cupos.component';
 // import { get } from 'scriptjs';
-import { PdfService } from "src/app/shared/components/pdfs/services/pdf.service";
+// import { PdfService } from "src/app/shared/components/pdfs/services/pdf.service";
 import { Order } from '../../payments/interfaces/order';
 
 @Component({
@@ -35,6 +35,8 @@ export class EnrollmentComponent implements OnInit {
   dataPrint: Order;
   order: Observable<Order>;
   view: boolean = false;
+  fields: any;
+  form:FormGroup
   
   constructor(
     public dialog: MatDialog,
@@ -44,8 +46,10 @@ export class EnrollmentComponent implements OnInit {
     private stateRoute: Location,
     private router: Router,
     private paymentService: PaymentsService,
-    private pdfService: PdfService
-  ) { }
+    private fb: FormBuilder,
+  ) { 
+    this.createForm()
+  }
 
   subscriptions: Subscription[]=[]
 
@@ -68,6 +72,7 @@ export class EnrollmentComponent implements OnInit {
         if (params.params.id) {
           const order_id = params.params.id
           this.view = true;
+          this.form.disable()
             this.order = this.paymentService.getPayment(order_id).pipe(map(v=>{
               this.course = this.productService.getProduct(v.courses[0].id)
               this.getUser(v.user_id)
@@ -79,7 +84,7 @@ export class EnrollmentComponent implements OnInit {
         
       }
     )
-    
+
    
   }
 
@@ -90,9 +95,10 @@ export class EnrollmentComponent implements OnInit {
         console.log(this.user)
         this.resValue = null
         this.valueSearch = null
-        this.resSearch=null
-        
-        
+        this.resSearch=null 
+        if (this.user) {
+          this.setForm()
+        }
       })
     )
   }
@@ -119,6 +125,9 @@ export class EnrollmentComponent implements OnInit {
     this.valueSearch = null
     this.resSearch=null
     this.searched= !this.searched
+    if (this.user) {
+      this.setForm()
+    }
   }
 
   clikBuscar(){
@@ -129,7 +138,9 @@ export class EnrollmentComponent implements OnInit {
   addUser(){
     this.router.navigate(['/alumnos/editar-usuario'],{ queryParams: { returnUrl: this.router.url } } )
   }
-
+  editUser(){
+    this.router.navigate(['/alumnos/editar-usuario', this.user.id ], { queryParams: { returnUrl: this.router.url } } )
+  }
 
   pay(course){
 
@@ -186,6 +197,36 @@ export class EnrollmentComponent implements OnInit {
     // this.paymentService.storeOrder(dataForm)
   }
 
+  createForm() {
+    console.log(this.user);
+    
+    this.form = this.fb.group({
+      name: [this.user?.name, Validators.required],
+      last_name: [this.user?.last_name, Validators.required],
+      email: [this.user?.email, [Validators.required, Validators.email]],
+      n_doc_iden: [this.user?.account?.n_doc_iden, Validators.required],
+      type_doc_iden: ['CI', Validators.required],
+      address_one: [this.user?.account?.address_one, Validators.required],
+      phone_one: [this.user?.account?.phone_one, Validators.required],
+    })
+    
+
+  }
+
+  setForm(){
+    this.form.patchValue({
+      name: this.user?.name,
+      last_name: this.user?.last_name,
+      email: this.user?.email,
+      n_doc_iden: this.user?.account?.n_doc_iden,
+      type_doc_iden: 'CI',
+      address_one: this.user?.account?.address_one,
+      phone_one: this.user?.account?.phone_one,
+    })
+    console.log(this.form.value);
+    
+  }
+
 
   openDataPayment(data?) {
     
@@ -221,17 +262,21 @@ export class EnrollmentComponent implements OnInit {
 
         }else{
 
-          const dat = {
-            user_id: this.user.id,
-            name: this.user?.name,
-            last_name: this.user?.last_name,
-            email: this.user?.email,
-            n_doc_iden: this.user?.account?.n_doc_iden,
-            type_doc_iden: 'CI',
-            address_one: this.user?.account?.address_one,
-            phone_one: this.user?.account?.phone_one,
-            products: [data]
-          }
+          let dat = this.form.value
+          dat.products = [data]
+          console.log(dat);
+          
+          // {
+            // user_id: this.user.id,
+            // name: this.user?.name,
+            // last_name: this.user?.last_name,
+            // email: this.user?.email,
+            // n_doc_iden: this.user?.account?.n_doc_iden,
+            // type_doc_iden: this.user?.account?.n_doc_iden,
+            // address_one: this.user?.account?.address_one,
+            // phone_one: this.user?.account?.phone_one,
+           // products: [data]
+          // }
 
           this.storeOrder(dat,"PL")
         }
@@ -258,32 +303,42 @@ export class EnrollmentComponent implements OnInit {
   }
 
 
-  setFields() {
-    // console.log(elementEdit);
 
-    this.typesDocIden = [
-      {name: 'CI', value:'CI'},
-      {name: 'Pasaporte', value:'Pasaporte'}
-    ]
+  getErrorMessage(validator){
+    let message
+    switch (validator) {
+      case 'notIncludedIn':{
+        message = "El email ya existe"
+        break;
+      }
+      case 'email':{
+        message = "Email no válido"
+        break;
+      }      
+      case 'date':{
+        message = "Formato de fecha inválido"
+        break;
+      }      
+      case 'number':{
+        message = "Solo números"
+        break;
+      }      
+      case 'required':{
+        message = "Campo requerido"
+        break;
+      }  
     
-    const fields = [
-      { nameControl: 'id', type: 'hidden', value: this.user?.id, label: 'Id' },
-      { nameControl: 'name', type: 'text', value: this.user?.name, label: 'Nombre', validators: [Validators.required] },
-      { nameControl: 'last_name', type: 'text', value: this.user?.last_name, label: 'Apellido', validators: [Validators.required] },
-      { nameControl: 'type_doc_iden', type: 'select', value: this.user?.account.type_doc_iden, label: 'Tipo documento de identidad',options: this.typesDocIden , validators: [Validators.required] },
-      { nameControl: 'n_doc_iden', type: 'text', value: this.user?.account.n_doc_iden, label: 'Nº documento', validators: [Validators.required] },
-      { nameControl: 'email', type: 'text', value: this.user?.email, label: 'Email', validators: [Validators.required] },
-      { nameControl: 'phone_one', type: 'text', value: this.user?.account.phone_one, label: 'Teléfono' },
-      { nameControl: 'address_one', type: 'text', value: this.user?.account.address_one, label: 'Dirección',class:'mvd-col1--1' },
+      default:
+        message = "No válido"
+        break;
+    }
 
-    ]
-    return fields
-    
+    return message
   }
-
 
   pdf(){
     this.print = true;
+    
     // this.print = false;
   }
 }
