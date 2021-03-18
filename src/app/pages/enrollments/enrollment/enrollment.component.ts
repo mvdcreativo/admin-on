@@ -138,6 +138,7 @@ export class EnrollmentComponent implements OnInit {
   addUser(){
     this.router.navigate(['/alumnos/editar-usuario'],{ queryParams: { returnUrl: this.router.url } } )
   }
+  
   editUser(){
     this.router.navigate(['/alumnos/editar-usuario', this.user.id ], { queryParams: { returnUrl: this.router.url } } )
   }

@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
 
-  API: "https://api.on.picaworks.com/api/",
-  APIAuth: "http://api.on.picaworks.com/api/auth/",
+  API: "https://api.oncapacitaciones.com/api/",
+  APIAuth: "https://api.oncapacitaciones.com/api/auth/",
 
 
   ////ROUTES API
