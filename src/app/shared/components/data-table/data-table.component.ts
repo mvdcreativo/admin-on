@@ -37,6 +37,8 @@ export class DataTableComponent implements OnInit {
   ngOnInit(): void {
     this.displayedColumns = this.columns.map(v => v.col)
     this.displayedColumns.push('actions')
+    console.log(this.columns);
+    
   }
 
   editItem(element) {

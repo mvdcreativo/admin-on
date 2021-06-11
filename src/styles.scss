@@ -80,6 +80,9 @@ a{
       color: var(--color-secondary)
   }
 }
+.title-case{
+  text-transform: capitalize!important;
+}
 .search{
   z-index: 1000!important;
 }

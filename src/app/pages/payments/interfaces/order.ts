@@ -1,3 +1,4 @@
+import { Status } from 'src/app/shared/interfaces/status';
 import { User } from '../../accounts/interfaces/account';
 import { Product } from '../../products/interfaces/product';
 
@@ -12,11 +13,16 @@ export interface Order {
     products: ProductOrder[];
     type_doc_iden: string;
     status_mp?:string;
+    payment_metod_mp?:string;
+    order_status_mp?:string;
     user_id:number;
     user?: User;
     courses?: Product[];
     created_at?: any;
-    updated_at?: any
+    updated_at?: any;
+    payment_status_slug?: string;
+    status_id?: number;
+    status?:Status;
 }
 
 

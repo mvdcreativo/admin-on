@@ -265,20 +265,8 @@ export class EnrollmentComponent implements OnInit {
 
           let dat = this.form.value
           dat.products = [data]
-          console.log(dat);
-          
-          // {
-            // user_id: this.user.id,
-            // name: this.user?.name,
-            // last_name: this.user?.last_name,
-            // email: this.user?.email,
-            // n_doc_iden: this.user?.account?.n_doc_iden,
-            // type_doc_iden: this.user?.account?.n_doc_iden,
-            // address_one: this.user?.account?.address_one,
-            // phone_one: this.user?.account?.phone_one,
-           // products: [data]
-          // }
-
+  
+          dat.payment_status_slug = "pago_en_local"
           this.storeOrder(dat,"PL")
         }
 

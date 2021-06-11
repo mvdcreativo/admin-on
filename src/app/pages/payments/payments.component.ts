@@ -30,10 +30,12 @@ export class PaymentsComponent implements OnInit {
     { title: 'Email', col: 'email' },
     { title: 'Teléfono ', col: 'phone_one' },
     { title: 'Fecha', col: 'created_at', pipe: "dd/MM/yyyy" },
-    { title: 'Estado ', col: 'status_pm' },
+    { title: 'Metodo de pago', col: 'payment_metod_mp', class:'title-case'},
+    { title: 'Estado ', col: 'status' },
 
   ]
-
+  
+  
   dataSource: Observable<any[]>;
 
   ////paginator
@@ -64,8 +66,6 @@ export class PaymentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPayments(this.pageDefault, this.perPage, this.filter, this.orden)
-
-
   }
 
   paginatorChange(e: PageEvent) {
@@ -90,8 +90,9 @@ export class PaymentsComponent implements OnInit {
           name: `${x?.name} ${x?.last_name}`,
           email: x?.email,
           phone_one: x?.phone_one,
-          status_mp: x?.status_mp,
-
+          order_status_mp: x?.order_status_mp,
+          payment_metod_mp: x?.payment_metod_mp,
+          status: x?.status?.name
         }
       })
       return dataTable;
@@ -165,7 +166,8 @@ export class PaymentsComponent implements OnInit {
       { nameControl: 'last_name', type: 'text', value: elementEdit?.last_name, label: 'Apellido', validators: [Validators.required] },
       { nameControl: 'email', type: 'text', value: elementEdit?.email, label: 'Email', validators: [Validators.required, Validators.email] },
       { nameControl: 'phone_one', type: 'text', value: elementEdit?.phone_one, label: 'Teléfono', validators: [Validators.required] },
-      { nameControl: 'status_mp', type: 'text', value: elementEdit?.status_mp, label: 'Estado', validators: [Validators.required] },
+      { nameControl: 'order_status_mp', type: 'text', value: elementEdit?.order_status_mp, label: 'Estado' },
+      { nameControl: 'payment_metod_mp', type: 'text', value: elementEdit?.payment_metod_mp, label: 'Metodo de pago' },
 
     ]
 
