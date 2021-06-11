@@ -10,7 +10,7 @@
         [matMenuTriggerFor]="menu" 
         #menuTrigger="matMenuTrigger">
         <mat-icon class="material-icons-round">how_to_reg</mat-icon>
-        <span *ngIf="currentUser |async as currentUser">{{ currentUser.name }} {{ currentUser.last_name.slice(0,1) }}.</span> 
+        <span *ngIf="currentUser |async as currentUser">{{ currentUser.name }} {{ currentUser?.last_name?.slice(0,1) }}.</span> 
     </button>
     <!-- <span><mat-icon class="material-icons-round" >engineering</mat-icon></span> -->
     <mat-menu class="desplegable" [overlapTrigger]="false" #menu="matMenu">

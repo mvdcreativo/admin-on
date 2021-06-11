@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  API: "http://on_api_v1.test/api/",
-  APIAuth: "http://on_api_v1.test/api/auth/",
+  API: "https://api.oncapacitaciones.com/api/",
+  APIAuth: "https://api.oncapacitaciones.com/api/auth/",
 
 
   ////ROUTES API

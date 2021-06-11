@@ -85,12 +85,12 @@ export class PaymentsComponent implements OnInit {
     this.dataSource = this.result.pipe(map(v => {
       const dataTable = v.data.data.map(x => {
         return {
-          id: x.id,
-          created_at: x.created_at,
-          name: `${x.name} ${x.last_name}`,
-          email: x.email,
-          phone_one: x.phone_one,
-          status_mp: x.status_mp,
+          id: x?.id,
+          created_at: x?.created_at,
+          name: `${x?.name} ${x?.last_name}`,
+          email: x?.email,
+          phone_one: x?.phone_one,
+          status_mp: x?.status_mp,
 
         }
       })

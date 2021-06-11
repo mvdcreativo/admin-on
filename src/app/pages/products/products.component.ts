@@ -98,12 +98,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
           styleClass = "text-red"
         }
         return {
-          id: x.id,
-          title: x.title,
-          user_instructor: x.user_instructor.name,
-          status_id: x.status_id,
-          cupos: `${x.cupos_confirmed}/${x.cupos}`,
-          date_ini: x.date_ini,
+          id: x?.id,
+          title: x?.title,
+          user_instructor: x?.user_instructor?.name,
+          status_id: x?.status_id,
+          cupos: `${x?.cupos_confirmed}/${x?.cupos}`,
+          date_ini: x?.date_ini,
           class: styleClass
 
 
