@@ -81,13 +81,15 @@ export class EnrollmentsComponent implements OnInit {
   loadData() {
 
     this.dataSource = this.result.pipe(map(v => {
-      const dataTable = v.data.data.map(x => {
+      const dataTable = v.data.data
+      .filter(v=> v.user !== null)
+      .map(x => {
         return {
           id: x.id,
           created_at: x.created_at,
-          name: `${x.user.name} ${x.user.last_name}`,
+          name: `${x.user.name} ${x.user?.last_name}`,
           email: x.user.email,
-          phone_one: x.user.phone_one,
+          phone_one: x?.user.phone_one,
 
         }
       })

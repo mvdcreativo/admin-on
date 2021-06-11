@@ -59,7 +59,9 @@ export class InscripcionesComponent implements OnInit {
 
   loadData(data) {
 
-    this.dataSource = data.map(x => {
+    this.dataSource = data
+    .filter(v=> v.user !== null)
+    .map(x => {
         return {
           id: x.id,
           name: `${x.user.name} ${x.user.last_name}`,
