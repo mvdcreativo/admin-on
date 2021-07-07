@@ -7,7 +7,7 @@ import { FilterStreetsPipe } from './filter-streets.pipe';
 import { FilterCityPipe } from './filter-city.pipe';
 import { FilterMunicipalityPipe } from './filter-municipality.pipe';
 import { DynamicPipePipe } from './dynamic-pipe.pipe';
-
+import { NumberToLetterPipe } from './number-to-letter.pipe';
 
 @NgModule({
     imports: [ 
@@ -20,7 +20,7 @@ import { DynamicPipePipe } from './dynamic-pipe.pipe';
         FilterCityPipe,
         FilterMunicipalityPipe,
         DynamicPipePipe,
-      
+        NumberToLetterPipe
         
     ],
     exports: [
@@ -30,6 +30,7 @@ import { DynamicPipePipe } from './dynamic-pipe.pipe';
         FilterCityPipe,
         FilterMunicipalityPipe,
         DynamicPipePipe,
+        NumberToLetterPipe
         
     ],
     providers: [

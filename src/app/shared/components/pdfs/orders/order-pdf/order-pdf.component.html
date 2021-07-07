@@ -1,27 +1,27 @@
 <div id="container" #container class="container" *ngIf="!hidden">
-    <div style="border: none;" class="row"><p  style="grid-column: 1/13; width: 100%; text-align: right;">{{ dataPrint.created_at | date:"dd/MM/yyyy" }}</p></div>
+    <div style="border: none;" class="row"><p  style="grid-column: 1/13; width: 100%; text-align: right;">{{ dataPrint?.created_at | date:"dd/MM/yyyy" }}</p></div>
     <h1>DATOS DEL RESPONSABLE LEGAL</h1>
     <div class="row">
         <div style="grid-column: 1/2;" class="title">Nombre: </div>
-        <div style="grid-column: 2/7;" class="text"> {{ dataPrint.name}}</div>
+        <div style="grid-column: 2/7;" class="text"> {{ dataPrint?.name}}</div>
         <div style="grid-column: 7/8;" class="title">Apellido: </div>
-        <div style="grid-column: 8/13;" class="text">{{ dataPrint.last_name }}</div>
+        <div style="grid-column: 8/13;" class="text">{{ dataPrint?.last_name }}</div>
     </div>
 
     <div class="row">
         <!-- <div style="grid-column: 1/2;" class="title">F. Nacimiento: </div> -->
         <!-- <div style="grid-column: 2/4;" class="text"> </div> -->
         <div style="grid-column: 1/2;" class="title">Cédula: </div>
-        <div style="grid-column: 2/4;" class="text">{{ dataPrint.n_doc_iden }}</div>
+        <div style="grid-column: 2/4;" class="text">{{ dataPrint?.n_doc_iden }}</div>
         <div style="grid-column: 4/5;" class="title">Télefono: </div>
-        <div style="grid-column: 5/9;" class="text">{{ dataPrint.phone_one }}</div>
+        <div style="grid-column: 5/9;" class="text">{{ dataPrint?.phone_one }}</div>
         <div style="grid-column: 9/10;" class="title">Ocupación: </div>
         <div style="grid-column: 10/13;" class="text"> </div>
     </div>
 
     <div class="row">
         <div style="grid-column: 1/2;" class="title">Dirección: </div>
-        <div style="grid-column: 2/13" class="text"> {{ dataPrint.address_one }}</div>
+        <div style="grid-column: 2/13" class="text"> {{ dataPrint?.address_one }}</div>
         
     </div>
 
@@ -30,39 +30,39 @@
     <h1>DATOS DEL ALUMNO</h1>
     <div class="row">
         <div style="grid-column: 1/2;" class="title">Nombre: </div>
-        <div style="grid-column: 2/7;" class="text"> {{ dataPrint.user.name }}</div>
+        <div style="grid-column: 2/7;" class="text"> {{ dataPrint?.user.name }}</div>
         <div style="grid-column: 7/8;" class="title">Apellido: </div>
-        <div style="grid-column: 8/13;" class="text"> {{ dataPrint.user.last_name }}</div>
+        <div style="grid-column: 8/13;" class="text"> {{ dataPrint?.user.last_name }}</div>
     </div>
     <div class="row">
         <div style="grid-column: 1/2;" class="title">F. Nacimiento: </div>
-        <div style="grid-column: 2/4;" class="text">{{ dataPrint.user.account.birth  | date:'dd/MM/yyyy' }}</div>
+        <div style="grid-column: 2/4;" class="text">{{ dataPrint?.user?.account?.birth  | date:'dd/MM/yyyy' }}</div>
         <div style="grid-column: 4/5;" class="title">Cédula: </div>
-        <div style="grid-column: 5/7;" class="text"> {{ dataPrint.user.account.n_doc_iden }}</div>
+        <div style="grid-column: 5/7;" class="text"> {{ dataPrint?.user?.account?.n_doc_iden }}</div>
         <div style="grid-column: 7/8;" class="title">Teléfono: </div>
-        <div style="grid-column: 8/10;" class="text">{{ dataPrint.user.account.phone_one }}</div>
+        <div style="grid-column: 8/10;" class="text">{{ dataPrint?.user?.account?.phone_one }}</div>
         <div style="grid-column: 10/11;" class="title">Celular: </div>
-        <div style="grid-column: 11/13;" class="text">{{ dataPrint.user.account.phone_two }}</div>
+        <div style="grid-column: 11/13;" class="text">{{ dataPrint?.user?.account?.phone_two }}</div>
     </div>
     <div class="row">
         <div style="grid-column: 1/2;" class="title">Dirección: </div>
-        <div style="grid-column: 2/6" class="text"> {{ dataPrint.user.account.address_one }}</div>
+        <div style="grid-column: 2/6" class="text"> {{ dataPrint?.user?.account?.address_one }}</div>
         <div style="grid-column: 6/7;" class="title">Ciudad: </div>
-        <div style="grid-column: 7/10;" class="text"> {{ dataPrint.user.account.neighborhood.city.name }} </div>
+        <div style="grid-column: 7/10;" class="text"> {{ dataPrint?.user?.account?.neighborhood?.city?.name }} </div>
         <div style="grid-column: 10/11;" class="title">Departamento: </div>
-        <div style="grid-column: 11/13;" class="text">{{ dataPrint.user.account.neighborhood.city.state.name }}</div>
+        <div style="grid-column: 11/13;" class="text">{{ dataPrint?.user?.account?.neighborhood?.city?.state?.name }}</div>
     </div>
 
     <h1>DATOS DEL CURSO</h1>
     <div class="row">
         <div style="grid-column: 1/3;" class="title">Curso Contratado: </div>
-        <div style="grid-column: 3/13;" class="text">{{ dataPrint.courses[0].title}}</div>
+        <div style="grid-column: 3/13;" class="text">{{ dataPrint?.courses[0].title}}</div>
     </div>
     <div class="row">
         <div style="grid-column: 1/2;" class="title">Duración: </div>
-        <div style="grid-column: 2/4;" class="text">{{ dataPrint.courses[0].length }} {{ dataPrint.courses[0].length_unit?.name }}/s</div>
+        <div style="grid-column: 2/4;" class="text">{{ dataPrint?.courses[0].length }} {{ dataPrint?.courses[0].length_unit?.name }}/s</div>
         <div style="grid-column: 4/5;" class="title">Fecha Inicio: </div>
-        <div style="grid-column: 5/7;" class="text">{{ dataPrint.courses[0].date_ini | date:'dd/MM/yyyy' }}</div>
+        <div style="grid-column: 5/7;" class="text">{{ dataPrint?.courses[0].date_ini | date:'dd/MM/yyyy' }}</div>
         <div style="grid-column: 7/8;" class="title">Dirección: </div>
         <div style="grid-column: 8/13;" class="text">  </div>
     </div>
@@ -70,10 +70,10 @@
         <div style="grid-column: 1/3;" class="title">Días y Horarios: </div>
         <div style="grid-column: 3/13;" class="text"> 
 
-                <span *ngFor="let item of dataPrint.courses[0].schedules; let i=index">
+                <span *ngFor="let item of dataPrint?.courses[0].schedules; let i=index">
                     {{ item.day }} de {{ item.h_ini }} a {{ item.h_end }}
-                    <span *ngIf="i+1 != dataPrint.courses[0].schedules.length">,</span>
-                    <span *ngIf="i+1 == dataPrint.courses[0].schedules.length">.</span>
+                    <span *ngIf="i+1 != dataPrint?.courses[0].schedules.length">,</span>
+                    <span *ngIf="i+1 == dataPrint?.courses[0].schedules.length">.</span>
                 </span>
 
         </div>
@@ -92,11 +92,11 @@
 
     </div>
 
-    <div class="row text-contrato">
-        <p>Ciudad: ................................................................................... Departamento: ..................................................................... Fecha: ........./........./...............</p>
-        <p>CONFORME por la suma de pesos uruguayos ........................................................................................($U ...........................) que debo y pagaré al portador en el domicilio de ..................................................................... en ................cuotas mensuales y consecutivas de pesos uruguayos
-            ........................................................................................($U ...........................)
-            cada una, venciendo la primera el día ................de .................... de .................... 
+    <div class="row text-contrato" *ngIf="dataPrint?.cuotas >= 2; else pago" >
+        <p>Ciudad: <strong>Ciudad de la Costa</strong>.&nbsp;&nbsp;&nbsp;&nbsp; Departamento: <strong>Canelones</strong>.&nbsp;&nbsp;&nbsp;&nbsp; Fecha: <strong>{{ dataPrint?.created_at | date:"fullDate" }}</strong> </p>
+        <p>CONFORME por la suma de pesos uruguayos <strong>{{ dataPrint?.courses[0].price | numberToLetter | lowercase }}</strong> (<strong>$U {{ dataPrint?.courses[0].price | number }}</strong>) que debo y pagaré al portador en el domicilio de Av. Giannattasio Km 18.200 M.G S.102 en <strong>{{ dataPrint?.cuotas }} cuotas</strong> mensuales y consecutivas de pesos uruguayos
+            <strong>{{ dataPrint?.amount_cuota | numberToLetter | lowercase }} ($U {{ dataPrint?.amount_cuota }})</strong>
+            cada una, venciendo la primera el día <strong>{{ dateVencimiento(dataPrint?.created_at) | date:'fullDate' }}</strong> 
             y la siguiente el mismo día de los meses sucesivos, con más cinco días de gracia. La mora producirá de pleno derecho, sin necesidad de interpelación judicial ni extrajudicial de clase alguna por el solo vencimiento de los plazos estipulados, devengándose el máximo interés moratorio legal. Sin perjuicio de lo precedente expresado, la falta de pagos de una o más cuotas producirá la caducidad de los plazos, haciéndose exigible la totalidad del saldo a la fecha, como si hubiesen vencido los plazos pactados. Acepto la competencia de los jueces del lugar de la República que elija el tenedor de este conforme, siendo de mi cargo todos los tributos, costos y costas, y demás gastos judiciales y/lo extrajudiciales que se originen por el incumplimiento desde el momento de exigibilidad de la deuda hasta el dia de pago. Los pagos parciales o entregas a cuenta no implicarán novación, y se imputarán primero a lo adeudado por capital, y luego a cancelar los intereses moratorios devengados. Constituyo como domicilio especial a todos los efectos judiciales o extrajudiciales o deriven de este contrato al pie de este conforme.
         </p>
 
@@ -106,5 +106,9 @@
             <span class="firmas">DOCUMENTO DE IDENTIDAD</span>
         </p>
     </div>
+
+    <ng-template #pago>
+        <h1>Datos del Pago: {{ dataPrint?.payment_metod_mp }} - {{ dataPrint?.status?.name }} </h1>
+    </ng-template>
 
 </div>

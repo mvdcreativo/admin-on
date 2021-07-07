@@ -76,7 +76,13 @@ export class OrderPdfComponent implements OnInit, AfterViewInit {
   }
     
 
- 
+    dateVencimiento(date){
+      var e = new Date(date)
+          e.setMonth(e.getMonth() + 1)
+          console.log(e);
+          
+          return e;
+    }
   } 
 
 

@@ -37,6 +37,7 @@ export class EnrollmentComponent implements OnInit {
   view: boolean = false;
   fields: any;
   form:FormGroup
+  amount: string;
   
   constructor(
     public dialog: MatDialog,
@@ -65,6 +66,14 @@ export class EnrollmentComponent implements OnInit {
         const course_id = params.params.course_id
         if (params.params.course_id) {
           this.course = this.productService.getProduct(course_id)
+          this.subscriptions.push(
+            
+            this.course.subscribe(res=>{
+              this.amount = res.price
+            })
+
+          )
+
         }
         if (params.params.user_id) {
           this.getUser(params.params.user_id)
@@ -75,6 +84,13 @@ export class EnrollmentComponent implements OnInit {
           this.form.disable()
             this.order = this.paymentService.getPayment(order_id).pipe(map(v=>{
               this.course = this.productService.getProduct(v.courses[0].id)
+              this.subscriptions.push(
+            
+                this.course.subscribe(res=>{
+                  this.amount = res.price
+                })
+    
+              )
               this.getUser(v.user_id)
               this.dataPrint = v
               return v
@@ -209,12 +225,16 @@ export class EnrollmentComponent implements OnInit {
       type_doc_iden: ['CI', Validators.required],
       address_one: [this.user?.account?.address_one, Validators.required],
       phone_one: [this.user?.account?.phone_one, Validators.required],
+      cuotas:[1],
+      amount_cuota:[null],
+      
     })
     
 
   }
 
   setForm(){
+
     this.form.patchValue({
       name: this.user?.name,
       last_name: this.user?.last_name,
@@ -223,6 +243,20 @@ export class EnrollmentComponent implements OnInit {
       type_doc_iden: 'CI',
       address_one: this.user?.account?.address_one,
       phone_one: this.user?.account?.phone_one,
+      cuotas:1,
+      amount_cuota:parseFloat(this.amount).toFixed(2),
+    })
+    this.form.get('cuotas').valueChanges.subscribe(data =>{
+      if(data >=1){
+        const valorCuota =  parseFloat(this.amount) / data
+        this.form.get('amount_cuota').setValue( valorCuota.toFixed(2))
+        console.log(this.form.value);
+
+      }else{
+        this.form.get('amount_cuota').setValue( parseFloat(this.amount).toFixed(2) )
+        console.log(this.form.value);
+
+      }
     })
     console.log(this.form.value);
     

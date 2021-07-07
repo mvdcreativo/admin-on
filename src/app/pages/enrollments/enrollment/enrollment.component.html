@@ -97,6 +97,23 @@
                             <input formControlName="address_one" type="text" matInput placeholder="Dirección" autocomplete="off">
                             <mat-error *ngIf="form.controls['address_one'].errors?.required">{{getErrorMessage('required')}}</mat-error>
                         </mat-form-field>
+
+                        <ng-container >
+                            <div class="pago-local mvd-col1--1">
+                                <h2>Pago en local</h2>
+                                <mat-form-field class="" appearance="outline">
+                                    <mat-label>Cantidad de cuotas</mat-label>
+                                    <input formControlName="cuotas" type="text" matInput placeholder="Cantidad de cuotas" autocomplete="off">
+                                    <mat-error *ngIf="form.controls['cuotas'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="" appearance="outline">
+                                    <mat-label>Monto por cuota</mat-label>
+                                    <input formControlName="amount_cuota" type="text" matInput placeholder="Monto por cuota" autocomplete="off">
+                                    <mat-error *ngIf="form.controls['amount_cuota'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+
                     </form>
                 </div>
 

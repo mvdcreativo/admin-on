@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -13,7 +13,10 @@ import { PagesComponent } from './pages/pages.component';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { indexAuthInterceptor } from './auth/helpers/index-auth.interceptor';
+import { registerLocaleData } from '@angular/common';
+import localeEsUy from '@angular/common/locales/es-UY';
 
+registerLocaleData(localeEsUy, 'es-Uy');
 
 
 @NgModule({
@@ -33,6 +36,7 @@ import { indexAuthInterceptor } from './auth/helpers/index-auth.interceptor';
   providers: [
     indexAuthInterceptor,
     {provide: MAT_DATE_LOCALE, useValue: 'es-UY'},
+    {provide: LOCALE_ID, useValue: 'es-UY'},
   ],
   bootstrap: [AppComponent]
 })

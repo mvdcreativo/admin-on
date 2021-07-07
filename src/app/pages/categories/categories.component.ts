@@ -112,7 +112,6 @@ export class CategoriesComponent implements OnInit {
   }
 
   itemAction(event) {
-    console.log(event);
 
     if (event.action === "delete") {
       this.deleteItem(event.element.id).pipe(take(1)).subscribe(res => console.log(res))

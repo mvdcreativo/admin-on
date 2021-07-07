@@ -23,6 +23,8 @@ export interface Order {
     payment_status_slug?: string;
     status_id?: number;
     status?:Status;
+    cuotas?:number;
+    amount_cuota?:any;
 }
 
 
