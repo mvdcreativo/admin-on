@@ -7,6 +7,9 @@ export const environment = {
   API: "http://on_api.test/api/",
   APIAuth: "http://on_api.test/api/auth/",
 
+  // API: "https://api.oncapacitaciones.com/api/",
+  // APIAuth: "https://api.oncapacitaciones.com/api/auth/",
+
 
   ////ROUTES API
   routesCRUD: {
@@ -33,7 +36,7 @@ export const environment = {
     users: "users",
     orders: "orders",
     enrollments:"enrollments"
-  
+
   }
 
 

@@ -41,16 +41,16 @@ export class EditUserComponent implements OnInit, OnDestroy {
     private userService: UsersService,
     private roleService: RoleService,
 
-  ) { 
-    
+  ) {
+
   }
 
   ngOnInit(): void {
 
-    
+
     this.urlRequest = this.router.url.split("/")
-     
-    
+
+
     this.activateRouter.paramMap.subscribe(
       (params:Params) => {
           if(params.params.id){
@@ -59,14 +59,14 @@ export class EditUserComponent implements OnInit, OnDestroy {
                 this.userEdit = v.data
                 console.log(this.userEdit);
                 this.getRoles()
-                
+
               }
               ))
           }else{
             this.userEdit = null
             this.getRoles()
           }
-        
+
       }
     )
     this.activateRouter.queryParamMap.subscribe((params:Params) => this.returUrl = params.params.returnUrl)
@@ -75,14 +75,14 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.map(v=>v.unsubscribe())
-    
+
   }
 
   private getRoles(){
-    this.subscriptions.push( 
+    this.subscriptions.push(
       this.roleService.getRoles().subscribe(
         res=> {
-          this.optionsRoles = res.map(v=> {return {name : v.name, value: v.id}})        
+          this.optionsRoles = res.map(v=> {return {name : v.name, value: v.id}})
           this.emailExistValidation()
         }
       )
@@ -102,6 +102,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
         neighborhood_id: neighborhood?.id,
         name: neighborhood?.name,
         state_id: neighborhood?.city.state_id,
+
     }
     this.dataLocation = {
       typeLocation: "user",
@@ -110,7 +111,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
   }
   setFields() {
     // console.log(elementEdit);
-    
+
     this.setDataLocation()
 
     this.typesDocIden = [
@@ -133,14 +134,14 @@ export class EditUserComponent implements OnInit, OnDestroy {
         { nameControl: 'phone_two', type: 'text', value: this.userEdit?.account.phone_two, label: 'Celular', validators: [Validators.required] },
         { nameControl: 'phone_one', type: 'text', value: this.userEdit?.account.phone_one, label: 'Teléfono' },
         { nameControl: 'role_id', type: 'select', value: this.userEdit?.account.role_id, label: 'Rol en Sistema', options: this.optionsRoles , validators: [Validators.required]},
-        { nameControl: 'bio', type: 'textarea', value: this.userEdit?.account.bio, label: 'Descripción / Bio', validators: [Validators.required] },
+        { nameControl: 'bio', type: 'textarea', value: this.userEdit?.account.bio, label: 'Descripción del docente / Bio', validators: [Validators.required] },
         { nameControl: 'address_one', type: 'text', value: this.userEdit?.account.address_one, label: 'Dirección',class:'mvd-col1--1' },
 
       ]
       return fields
 
     } else {
-      
+
       const fields = [
         { nameControl: 'id', type: 'hidden', value: this.userEdit?.id, label: 'Id' },
         // { nameControl: 'password', type: 'hidden', value: 'secret', label: 'Id' },
@@ -158,20 +159,20 @@ export class EditUserComponent implements OnInit, OnDestroy {
         { nameControl: 'role_id', type: 'select', value: this.userEdit?.account.role_id, label: 'Rol en Sistema', options: this.optionsRoles , validators: [Validators.required]},
         { nameControl: 'address_one', type: 'text', value: this.userEdit?.account.address_one, label: 'Dirección', class:'mvd-col1--1' },
         // { nameControl: 'bio', type: 'textarea', value: this.userEdit?.account.bio, label: 'Descripción', validators: [Validators.required] },
-      ]     
+      ]
       return fields
     }
     // console.log(fields);
-    
+
   }
 
 
   action(e){
     console.log(e);
-    
+
         if (e.id) {
           this.updateUser(e)
-          
+
         }else{
           this.storeUser(e)
         }
@@ -198,27 +199,27 @@ export class EditUserComponent implements OnInit, OnDestroy {
           this.router.navigate([`/${this.returUrl}`, res.id])
 
         }else{
-          this.router.navigate([`/${this.urlRequest[1]}`])   
-        }     
+          this.router.navigate([`/${this.urlRequest[1]}`])
+        }
       }
     )
   }
 
 
   emailExistValidation():void{
-    
+
     this.userService.getUsers(1,10000).pipe(map(v=>v.data.data.map(x=> x.email))).subscribe(res=>{
       if(this.userEdit?.email){
         console.log(this.userEdit?.email);
-        
+
         this.emailsExists = res.filter( x => x !== this.userEdit.email)
       }else{
         this.emailsExists = res
       }
       console.log(this.emailsExists);
-      
+
       this.fields = this.setFields()
     } )
-    
+
   }
 }

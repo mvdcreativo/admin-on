@@ -9,8 +9,8 @@ import { AdministradorGuard } from './auth/guards/administrador.guard';
 const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
 
-  { 
-    path: '', 
+  {
+    path: '',
     component: PagesComponent,
     children: [
       { path: '', redirectTo: '/productos' ,pathMatch:'full'},
@@ -28,8 +28,9 @@ const routes: Routes = [
       { path: 'alumnos', loadChildren: () => import('./pages/students/students.module').then(m => m.StudentsModule),canActivate:[AdministradorGuard] },
       { path: 'pagos', loadChildren: () => import('./pages/payments/payments.module').then(m => m.PaymentsModule) ,canActivate:[AdministradorGuard]},
       { path: 'inscripciones', loadChildren: () => import('./pages/enrollments/enrollments.module').then(m => m.EnrollmentsModule),canActivate:[AdministradorGuard] },
-      
-      
+      { path: 'carousels', loadChildren: () => import('./pages/carousels/carousels.module').then(m => m.CarouselsModule) },
+
+
       { path: '**', loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule) },
     ],
     canActivate:[AuthGuard],

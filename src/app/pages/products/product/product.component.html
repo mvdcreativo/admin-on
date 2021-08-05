@@ -15,31 +15,34 @@
 
             <mat-tab label="Horarios">
                 <mvd-schedules (submit)="changeTab($event)" ></mvd-schedules>
-                
+
             </mat-tab>
 
             <mat-tab label="Conocimientos">
                 <mvd-tab2 (submit)="changeTab($event)" ></mvd-tab2>
-                
+
             </mat-tab>
 
             <mat-tab label="Temas y Lecciones">
                 <mvd-sections-lesons (submit)="changeTab($event)"></mvd-sections-lesons>
-                
+
+            </mat-tab>
+            <mat-tab label="Imagenes" *ngIf="edit">
+
+                <mvd-images-product (submit)="changeTab($event)"></mvd-images-product>
             </mat-tab>
 
             <mat-tab label="Inscripciones" *ngIf="edit">
-                
+
                 <mvd-inscripciones [course_id]="productEdit.id" ></mvd-inscripciones>
             </mat-tab>
-
         </mat-tab-group>
     </ng-container>
 
     <ng-template #loading>
         <div class="div-content">
             <div class="loading"><div></div><div></div><div></div></div>
-    
+
         </div>
     </ng-template>
 

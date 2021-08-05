@@ -1,19 +1,30 @@
 <mat-card class="card mat-elevation-z16 animate__animated animate__slideInRight">
     <mat-card-header>
-        <mat-card-title>Usuario</mat-card-title>
+        <mat-card-title>Usuario / Alumno</mat-card-title>
         <mat-card-subtitle>Detalles del Usuario <strong>{{ userEdit?.name  }} {{ userEdit?.last_name  }}</strong>
         </mat-card-subtitle>
     </mat-card-header>
-    <ng-container *ngIf="fields">
 
-        <mvd-dinamic-form [fields]="fields" [locationFieldsData]="dataLocation" (value)="action($event)" ></mvd-dinamic-form>
+    <mat-tab-group mat-stretch-tabs class="">
+      <mat-tab label="Datos Personales">
+        <ng-container *ngIf="fields">
 
-    </ng-container>
+            <mvd-dinamic-form [fields]="fields" [locationFieldsData]="dataLocation" (value)="action($event)" ></mvd-dinamic-form>
+
+        </ng-container>
+
+      </mat-tab>
+
+      <mat-tab *ngIf="userEdit?.account.role_id === 2" label="Cursos">
+        <mvd-courses [courses]="userEdit?.courses" ></mvd-courses>
+      </mat-tab>
+
+    </mat-tab-group>
 
     <ng-template #loading>
         <div class="div-content">
             <div class="loading"><div></div><div></div><div></div></div>
-    
+
         </div>
     </ng-template>
 

@@ -38,8 +38,8 @@ export class FormProductComponent implements OnInit, OnDestroy {
 
   // @Output()changeIndex : EventEmitter<number> = new EventEmitter
   @Output()dataSubmit : EventEmitter<any> = new EventEmitter
-  
-  
+
+
   public form: FormGroup
   statuses: Observable<Status[]>;
   lengthUnits: Observable<LengthUnit[]>;
@@ -66,11 +66,11 @@ export class FormProductComponent implements OnInit, OnDestroy {
     private currencyService: CurrencyService,
     private categoryService: CategoriesService
 
-  ) { 
+  ) {
 
     this.productEdit$ = this.productServices.productOnEdit
     this.subcriptor.push(this.productEdit$.subscribe(p => {
-      this.productEdit = p; 
+      this.productEdit = p;
       this.loadData()
     }))
     // console.log(this.productEdit);
@@ -91,14 +91,14 @@ export class FormProductComponent implements OnInit, OnDestroy {
     this.getCurrency()
     this.getLengthUnits()
     this.createForm()
-    
+
     console.log(this.form.value);
   }
 
   createForm(){
- 
+
     // console.log(this.productEdit);
-    
+
     this.form = this.fb.group(
       {
         title:[this.productEdit?.title, Validators.required],
@@ -111,7 +111,7 @@ export class FormProductComponent implements OnInit, OnDestroy {
         user_instructor:[this.productEdit?.user_instructor , Validators.required],
         user_instructor_id:[this.productEdit?.user_instructor_id, Validators.required],
         certificate:[this.productEdit?.certificate, Validators.required],
-        // discount_uno:[this.productEdit?.discount_uno, Validators.required],
+        discount_uno:[this.productEdit?.discount_uno],
         // discount_dos:[this.productEdit?.discount_dos, Validators.required],
         // discount_tres:[this.productEdit?.discount_tres, Validators.required],
         title_certificate:[this.productEdit?.title_certificate, Validators.required],
@@ -153,16 +153,16 @@ export class FormProductComponent implements OnInit, OnDestroy {
       })
 
       this.form.get('categories').setValue(this.categoriesEdit)
-      
+
     }))
-      
+
   }
 
 
-  
+
   onCategoryRemoved(i: number) {
     console.log(i);
-    
+
     const categoriesSelected = this.form.get('categories').value as string[];
 
 
@@ -172,7 +172,7 @@ export class FormProductComponent implements OnInit, OnDestroy {
     this.form.get('categories').setValue(remov); // To trigger change detection
 
   }
-  
+
   removeItemFromArr( arr, item ) {
     return arr.filter( ( e,i) => {
         return i !== item;
@@ -183,10 +183,10 @@ export class FormProductComponent implements OnInit, OnDestroy {
 
   selectInstructor(e){
     this.imgInstructor = e.value?.image ?? null
-    this.form.get('user_instructor_id').patchValue(e.value?.id ?? null) 
+    this.form.get('user_instructor_id').patchValue(e.value?.id ?? null)
     // console.log(this.form.value);
-    
-    
+
+
   }
 
   editInstructor(){
@@ -212,18 +212,18 @@ export class FormProductComponent implements OnInit, OnDestroy {
   // }
 
   onSubmit(){
-    
+
     const fecha = moment(this.form.get('date_ini').value).format('YYYY-MM-DD HH:mm:ss')
     this.form.get('date_ini').patchValue(fecha)
     const data = this.form.value;
     const dataCategories = this.form.get('categories').value.map( v => v.id)
     data.categories = JSON.stringify(dataCategories);
     console.log(data);
-    
+
     this.dataSubmit.emit({data: data, indexTab:0})
   }
 
-  
+
   getLengthUnits(){
     this.lengthUnits = this.lengthUnitsService.getLengthUnits()
   }
@@ -264,9 +264,9 @@ export class FormProductComponent implements OnInit, OnDestroy {
       this.form.get('image').patchValue(selectedFile)
       this.messageUpload = null
       var reader = new FileReader();
-        reader.readAsDataURL(selectedFile); 
-        reader.onload = (_event) => { 
-          this.imgPreview = reader.result; 
+        reader.readAsDataURL(selectedFile);
+        reader.onload = (_event) => {
+          this.imgPreview = reader.result;
       }
       const fileNames = [];
       console.log(selectedFile);
@@ -274,7 +274,7 @@ export class FormProductComponent implements OnInit, OnDestroy {
       // console.log(this.files);
 
       // this.imagesServices.uploadImage(this.data, selectedFiles)
- 
+
     }else{
       const imgExist = this.form.get('image').value
       if (imgExist) {
@@ -296,20 +296,20 @@ export class FormProductComponent implements OnInit, OnDestroy {
       case 'email':{
         message = "Email no válido"
         break;
-      }      
+      }
       case 'date':{
         message = "Formato de fecha inválido"
         break;
-      }      
+      }
       case 'number':{
         message = "Solo números"
         break;
-      }      
+      }
       case 'required':{
         message = "Campo requerido"
         break;
-      }  
-    
+      }
+
       default:
         message = "No válido"
         break;

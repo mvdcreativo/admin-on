@@ -17,11 +17,13 @@ import { Location } from '@angular/common';
 export class DataTableComponent implements OnInit {
 
   @Input() dataSource
+  @Input() btn_edit: boolean = true
+  @Input() btn_delete: boolean = true
   @Input() columns: Column[];
   @Output() actionChange: EventEmitter<any> = new EventEmitter;
   displayedColumns: any[];
   url: any;
-
+  checked: boolean
 
 
 
@@ -38,9 +40,12 @@ export class DataTableComponent implements OnInit {
     this.displayedColumns = this.columns.map(v => v.col)
     this.displayedColumns.push('actions')
     console.log(this.columns);
-    
-  }
 
+  }
+  toggleChange(element){
+    const action = { action: 'toggle', element: element }
+    this.actionChange.emit(action)
+  }
   editItem(element) {
     const action = { action: 'edit', element: element }
     this.actionChange.emit(action)
@@ -54,6 +59,8 @@ export class DataTableComponent implements OnInit {
   deleteItem(element, message?) {
     this.openDialog(element,'DEL', message)
   }
+
+
 
   openDialog(element, accion, message?): void {
     !message ? message = "" : message = message;

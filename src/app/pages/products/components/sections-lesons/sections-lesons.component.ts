@@ -26,7 +26,7 @@ export class SectionsLesonsComponent implements OnInit, OnDestroy{
   idProduct: number;
   panel: number = null;
   fields: any = null
-  
+
 
   constructor(
     private productService: ProductService,
@@ -48,7 +48,7 @@ export class SectionsLesonsComponent implements OnInit, OnDestroy{
 
     moveItemInArray(this.sections, event.previousIndex, event.currentIndex);
     console.log(this.sections);
-    
+
     this.subscriptions.push(this.productService.sectionsSortUpdate(this.sections).subscribe())
 
   }
@@ -58,19 +58,19 @@ export class SectionsLesonsComponent implements OnInit, OnDestroy{
 
     moveItemInArray(lessons, event.previousIndex, event.currentIndex);
     console.log(event);
-    
+
     this.subscriptions.push(this.productService.lessonsSortUpdate(lessons).subscribe(
       res => {
         console.log(res);
         this.panel = indexPanel;
-        
+
       }
     ))
 
   }
 
   openDialog(data?) {
-    
+
     const dialogRef = this.dialog.open(ModalReutilComponent, {
       width: '650px',
       data: this.setFields(data)
@@ -81,13 +81,13 @@ export class SectionsLesonsComponent implements OnInit, OnDestroy{
       if(result){
         if (result.id) {
           this.updateCourseSection(result)
-          
+
         }else{
           this.storeCourseSection(result)
         }
 
       }
-      
+
     });
   }
 
@@ -106,7 +106,7 @@ export class SectionsLesonsComponent implements OnInit, OnDestroy{
     return fields
   }
 
-  setFieldsLesson(element) {    
+  setFieldsLesson(element) {
     console.log(this.sections);
     const sectionOptions : OptionSelect[] = this.sections.map(v => {
       return {value: v.id, name: v.title}
@@ -135,13 +135,13 @@ export class SectionsLesonsComponent implements OnInit, OnDestroy{
   }
 
   openDialogDelete(element):void {
-    let name 
+    let name
     if (element?.name) {
       name = element.name
     } else {
       name = element.title
     }
-    
+
     const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '350px',
       data: {name: name, message: "", value: false}
@@ -150,11 +150,11 @@ export class SectionsLesonsComponent implements OnInit, OnDestroy{
     dialogRef.afterClosed().subscribe(result => {
       if(result?.value){
         // console.log(element.id);
-        
+
         this.productService.deleteCourseSection(element.id)
       }
     });
-    
+
   }
 
 
@@ -172,13 +172,13 @@ export class SectionsLesonsComponent implements OnInit, OnDestroy{
       // this.animal = result;
       if(result){
         if (result.id) {
-          
+
         }else{
           this.storeLesson(result)
         }
 
       }
-      
+
     });
   }
 
@@ -189,10 +189,10 @@ export class SectionsLesonsComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.subscriptions.map(v=> v.unsubscribe())
-    
+
   }
 
   onSubmit(){
-    this.submit.emit(-1)
+    this.submit.emit(4)
   }
 }

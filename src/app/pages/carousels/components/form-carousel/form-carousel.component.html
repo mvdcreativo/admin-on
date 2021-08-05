@@ -1,0 +1,24 @@
+
+<form [formGroup]="form" *ngIf="form">
+
+  <mat-form-field class="mvd-col1-3" appearance="outline">
+      <mat-label>Nombre / Título</mat-label>
+      <input formControlName="name" matInput placeholder="Título descriptivo" autocomplete="off">
+      <mat-error *ngIf="form.controls['name'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="mvd-col3-4" appearance="outline">
+    <mat-label>Plataforma </mat-label>
+    <input formControlName="platform" matInput placeholder="Plataforma" autocomplete="off">
+    <mat-error *ngIf="form.controls['platform'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+  </mat-form-field>
+
+  <mat-checkbox class="mvd-col4-5" formControlName="status" color="primary">Activo</mat-checkbox>
+
+  <span>
+    <button mat-flat-button color="primary" [disabled]="!form.valid" (click)="onSubmit()">
+      {{ edit ? "Siguiente" : "Guardar" }}
+    </button>
+  </span>
+
+</form>

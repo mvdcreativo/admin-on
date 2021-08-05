@@ -48,7 +48,7 @@ mvd-input-autocomplete{
                 span{
                     font-weight: 500;
                 }
-            } 
+            }
         }
     }
     .content-search{
@@ -71,7 +71,7 @@ mvd-input-autocomplete{
             width: 50px;
             transition: all 500ms;
         }
-        
+
     }
 }
 .data-responsable {
@@ -104,7 +104,7 @@ mvd-input-autocomplete{
                 span{
                     font-weight: 500;
                 }
-            } 
+            }
         }
     }
 }
@@ -141,8 +141,21 @@ mvd-input-autocomplete{
         overflow: hidden;
         .price{
             h1{
-                margin-bottom: 0;
-                
+              text-align: right;
+              margin-bottom: 0;
+                .old-price{
+                  width:100%;
+                  float: left;
+                  color: rgb(124, 124, 124);
+                  font-size:14pt;
+                  text-decoration: line-through;
+                  margin-bottom:-10px
+                }
+                .new-price{
+                  width:100%;
+                  float: left;
+                }
+
             }
             // grid-column: 1/-1;
 
@@ -179,4 +192,3 @@ form{
 }
 
 
-        

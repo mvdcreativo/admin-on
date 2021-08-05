@@ -1,0 +1,27 @@
+.button-content{
+    display: grid;
+    grid-column: 1/-1;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    button{
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px 50px;
+    }
+}
+.video{
+    box-shadow: none;
+    form{
+        display: flex;
+        .video-url{
+            width: 40%;
+            min-width: 200px;
+        }
+        .btn{
+            margin-top: 10px;
+            margin-left: 10px;
+            height: 35px;
+        }
+    }
+}

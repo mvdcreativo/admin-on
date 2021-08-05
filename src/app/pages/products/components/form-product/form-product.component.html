@@ -1,18 +1,4 @@
 <form [formGroup]="form">
-    <div class="content-image">
-        <div class="upload">
-            <label for="file">
-                <div class="image-input">
-                    <img [src]="imgPreview" *ngIf="imgPreview" alt="Subir Imagen">
-                    <img [src]="'../../../../../../assets/images/no-image.svg'" *ngIf="!imgPreview" alt="Subir Imagen">
-                </div>
-            </label>
-            <input id="file" hidden type="file" (change)="uploadImage($event)">
-            <mat-error *ngIf="messageUpload">{{messageUpload}}</mat-error>
-            <mat-error *ngIf="form.controls['image'].errors?.required">{{getErrorMessage('required')}}</mat-error>
-        </div>
-
-    </div>
 
     <mat-form-field class="mvd-col1-3" appearance="outline">
         <mat-label>Título del Curso</mat-label>
@@ -43,11 +29,11 @@
 
     <mat-form-field class="mvd-col5--1" appearance="outline">
         <mat-label>Fecha de Inicio</mat-label>
-        <input 
-            matInput 
-            formControlName="date_ini" 
-            [matDatepicker]="picker" 
-            autocomplete="off" 
+        <input
+            matInput
+            formControlName="date_ini"
+            [matDatepicker]="picker"
+            autocomplete="off"
             (click)="picker.open()">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker startView="year"></mat-datepicker>
@@ -146,6 +132,13 @@
             <mat-error *ngIf="form.controls['price'].errors?.required">{{getErrorMessage('required')}}</mat-error>
         </mat-form-field>
     </div>
+    <mat-form-field class="" appearance="outline">
+      <mat-label>Descuento</mat-label>
+      <input formControlName="discount_uno" type="number" matInput placeholder="Descuento"
+          autocomplete="off">
+      <span matSuffix>%</span>
+      <mat-error *ngIf="form.controls['discount_uno'].errors?.required">{{getErrorMessage('required')}}</mat-error>
+    </mat-form-field>
 
     <mat-form-field appearance="outline">
         <mat-label>Estado</mat-label>

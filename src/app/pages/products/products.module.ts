@@ -13,18 +13,24 @@ import { SectionsLesonsComponent } from './components/sections-lesons/sections-l
 import { LessonsComponent } from './components/sections-lesons/lessons/lessons.component';
 import { SchedulesComponent } from './components/schedules/schedules.component';
 import { InscripcionesComponent } from './components/inscripciones/inscripciones.component';
-
+import { ImagesProductComponent } from './components/images-product/images-product.component';
+import { ImagesDragDropComponent } from './components/images-product/images-drag-drop/images-drag-drop.component';
+import { ThumbnailComponent } from './components/images-product/images-drag-drop/thumbnail/thumbnail.component';
 
 @NgModule({
   declarations: [
-    ProductsComponent, 
-    FormProductComponent, 
-    ProductComponent, 
-    Tab2Component, 
-    AdquiredSkillsComponent, 
-    SectionsLesonsComponent, 
-    LessonsComponent, 
-    SchedulesComponent, InscripcionesComponent, 
+    ProductsComponent,
+    FormProductComponent,
+    ProductComponent,
+    Tab2Component,
+    AdquiredSkillsComponent,
+    SectionsLesonsComponent,
+    LessonsComponent,
+    SchedulesComponent,
+    InscripcionesComponent,
+    ImagesProductComponent,
+    ImagesDragDropComponent,
+    ThumbnailComponent,
   ],
   imports: [
     CommonModule,

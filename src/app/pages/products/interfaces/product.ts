@@ -101,6 +101,8 @@ export interface Product {
     adquired_skills?: AdquiredSkills[];
     level?: Level;
     status_id:number;
+    images?:Image[];
+    pivot?: Pivot;
 }
 
 export interface Level {
@@ -118,6 +120,15 @@ export interface Schedule {
     course_id: number
 }
 
+export interface Pivot {
+  course_id: number;
+  currency: Currency
+  currency_id?: number;
+  order_id: number,
+  price: string
+  quantity: number
+
+}
 export interface AdquiredSkills {
     id?: number;
     title: string;
@@ -173,7 +184,7 @@ export interface User {
     name: string;
     email: string;
     email_verified_at?: any;
-    account?: Account; 
+    account?: Account;
     created_at: Date;
     updated_at: Date;
 }
@@ -186,6 +197,7 @@ export interface Image {
     title?: string;
     subtitle?: string;
     description?: string;
+    position?:number;
 
 }
 
