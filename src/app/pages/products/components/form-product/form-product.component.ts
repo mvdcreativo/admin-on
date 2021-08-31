@@ -103,7 +103,7 @@ export class FormProductComponent implements OnInit, OnDestroy {
       {
         title:[this.productEdit?.title, Validators.required],
         cupos:[this.productEdit?.cupos, [Validators.required, CustomValidators.number]],
-        image:[this.productEdit?.image || null, Validators.required,],
+        image:[this.productEdit?.image || null],
         length:[this.productEdit?.length,[Validators.required,CustomValidators.number]],
         length_unit_id:[this.productEdit?.length_unit_id, Validators.required],
         effort:[this.productEdit?.effort, Validators.required],
